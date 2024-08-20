@@ -1,0 +1,20 @@
+explain how to fix the problem with piece names/symbols not being unique
+
+explain how to add pieces to the piece list
+
+explain what to do when piece_names has a key that doesn't match the name of the piece it maps to (main.cpp, stage 0)
+
+explain what to do when some of the pieces share a symbol.
+
+basically update this to explain all the things that messages.cpp promises it'll explain.
+
+NOTE: There's an edge case during 'make'.
+    I use the -MMD flag to generate dependency files (.d)
+    If a .o file is compiled without -MMD, and then the -MMD flag is added to the Makefile 
+        and the header dependencies for that .o file are removed from the Makefile (bc they're not needed thanks to -MMD), 
+        then 'make' won't detect any changes when the necessary headers are modified, and thus will not trigger a rebuild
+            when it normally would.
+        - this is because the .d files haven't been generated yet, and the header dependencies were removed from the Makefile,
+        so the Makefile doesn't know that header modifications are relevant to the .o file.
+
+    TLDR if you change the makefile, run make clean. There are ways that take less time to compile but this is the easiest way.
