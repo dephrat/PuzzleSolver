@@ -95,13 +95,15 @@ namespace slvr {
 
     Solver::Solver(const std::vector<std::string>& pieceList, Solutions& solutions, Solutions& thread_solutions, int numThreads, 
     size_t batchSize) 
-    : pieceList(pieceList), solutions(solutions), thread_solutions(thread_solutions), numThreads(numThreads), batchSize(batchSize) {
+    : pieceList(pieceList), solutions(solutions), thread_solutions(thread_solutions), numThreads(numThreads), batchSize(batchSize),
+    useBatching(batchSize > 0) {
         prepBoard();
         prepLocations();
     }
 
     Solver::Solver(const std::vector<std::string>& pieceList, Solutions& solutions, int numThreads, size_t batchSize) 
-    : pieceList(pieceList), solutions(solutions), thread_solutions(solutions), numThreads(numThreads), batchSize(batchSize) {
+    : pieceList(pieceList), solutions(solutions), thread_solutions(solutions), numThreads(numThreads), batchSize(batchSize),
+    useBatching(batchSize > 0) {
         prepBoard();
         prepLocations();
     }
