@@ -28,7 +28,7 @@ int main() {
     
     //setNecessaryGlobalOptimizationVariables();
     slvr::Solver solver(pieceList, solutions, thread_solutions, numThreads, batchSize);
-    runSolver(solver, pieceList);
+    runSolver(solver, pieceList, numThreads > 0);
 
     /*
     //Stage 3: Wait for solver to finish
@@ -39,10 +39,6 @@ int main() {
     //Stage 4: View results
     std::cout << "How would you like to view the results?" << std::endl;
     shellDisplayResults(solver, pieceList);
-    //acceptUserInputAndDisplayCorrespondingInformation();
-
-    std::cout << solutions.getNumSolutions() << std::endl;
-
-    
+    //acceptUserInputAndDisplayCorrespondingInformation();   
     
 }

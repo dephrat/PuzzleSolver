@@ -40,7 +40,7 @@ std::vector<std::string> shellCreatePieceList();
 
 //Stage 2
 void shellPrepSolver(int&, int&, int&);
-void runSolver(slvr::Solver&, const std::vector<std::string>&);
+void runSolver(slvr::Solver&, const std::vector<std::string>&, bool);
 
 //Stage 3
 
