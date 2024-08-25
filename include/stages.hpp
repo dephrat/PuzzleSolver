@@ -4,6 +4,7 @@
 //includes:
 
 //Stage 0
+#include <algorithm>
 #include <iostream>
 #include <unordered_set>
 #include "display.hpp"
@@ -32,14 +33,13 @@ using Solution = std::vector<std::pair<Location, int>>;
 //functions:
 
 //Stage 0
-bool piecesValidation();
-void generatePieceOrientations();
+void stage0();
 
 //Stage 1
 std::vector<std::string> shellCreatePieceList();
 
 //Stage 2
-int shellPrepSolver();
+int shellPrepSolver(int&, int&, int&);
 void runSolver(slvr::Solver&, const std::vector<std::string>&);
 
 //Stage 3

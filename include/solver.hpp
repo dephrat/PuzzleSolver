@@ -65,6 +65,12 @@ namespace slvr {
         int numThreads;
         size_t batchSize;
         void thread_solve();
+
+
+        std::chrono::duration<double, std::milli> benchmark1;
+        std::chrono::duration<double, std::milli> benchmark2;
+        std::chrono::duration<double, std::milli> benchmark3;
+        long int numCalls1 = 0;
     };
 }
 

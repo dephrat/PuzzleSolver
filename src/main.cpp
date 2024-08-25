@@ -5,8 +5,9 @@
 
 int main() {
     //Stage 0: Initial condition checking
-    if (!piecesValidation()) exit(0);
-    generatePieceOrientations();
+    //if (!piecesValidation()) exit(0);
+    //generatePieceOrientations();
+    stage0();
 
     //Stage 1: Create/edit piece list
     std::vector<std::string> pieceList = shellCreatePieceList();
@@ -14,14 +15,19 @@ int main() {
 
     //Stage 2: Run solver
     //promptUserForInput(); //optimization input
-    int maxSolutions = shellPrepSolver();
+    int numThreads;
+    int batchSize;
+    int maxSolutions;
+    shellPrepSolver(numThreads, batchSize, maxSolutions);
+
+    //int maxSolutions = shellPrepSolver();
     //performNecessaryInitializations();
         //includes Solutions for our storage
     Solutions solutions(maxSolutions);
     Solutions thread_solutions(maxSolutions);
     
     //setNecessaryGlobalOptimizationVariables();
-    slvr::Solver solver(pieceList, solutions, thread_solutions, 64, 100);
+    slvr::Solver solver(pieceList, solutions, thread_solutions, 64, 20);
     runSolver(solver, pieceList);
 
     /*

@@ -3,6 +3,9 @@
 #include "../include/solutions.hpp"
 
 #define USE_BATCHING true
+#define USE_BOUNDINGBOX true
+
+using Time = std::chrono::steady_clock;
 
 namespace slvr {
 
@@ -18,13 +21,21 @@ namespace slvr {
                 locations.push_back(std::make_pair(i, j));
     }
 
+    inline bool inBounds(const Location& location, const pcs::BB& bb) {
+        int x = location.first, y = location.second;
+        return bb.left + x >= 0 && bb.right + x < 10 && bb.up + y >= 0 && bb.down + y < 10;
+    }
     std::vector<int> Solver::checkPlacement(const pcs::Piece* piece, const Location& location, const Board* board) {
         //return true for the orientations that would fit at current Location
 
         std::vector<int> ret;
-        unsigned char i = 0;
         bool placeable;
-        for (const pcs::Orientation& orientation : piece->orientations) {
+
+        for (int i = 0; i < piece->orientations.size(); i++) {
+            const pcs::Orientation& orientation = piece->orientations[i];
+            if (!inBounds(location, orientation.boundingBox)) {
+                continue;
+            }
             placeable = true;
             for (const Location& coordinate : orientation.coordinates) {
                 int row = coordinate.first + location.first;
@@ -40,7 +51,6 @@ namespace slvr {
                 //because of the possibility of future optimization, in which case I want it to be easily visible
             }
             if (placeable) ret.push_back(i);
-            i++;
         }
         return ret;
     }
@@ -100,7 +110,12 @@ namespace slvr {
         const pcs::Piece* piece = pcs::piece_names.at(pieceList[pc_idx]);
         for (const Location& location : locations) {
             
+            const auto start1 = Time::now();
             std::vector<int> result = checkPlacement(piece, location, &(task.board));
+            const auto end1 = Time::now();
+            benchmark1 += end1-start1;
+            numCalls1++;
+
 
             for (int i : result) {
                 placePiece(piece, i, location, &task);
@@ -191,6 +206,7 @@ namespace slvr {
             }
             #if USE_BATCHING
                 int numTasksToMove = std::min(self->taskQueue.size(), self->batchSize);
+                
                 std::vector<Task> tasksToProcess;
                 for (int i = 0; i < numTasksToMove; ++i) {
                     tasksToProcess.push_back(std::move(self->taskQueue.front()));
@@ -245,11 +261,12 @@ namespace slvr {
             if (pthread_create(&threadPool[i], NULL, startup, this) != 0) 
                 std::cerr << "Failed to create thread" << std::endl; 
 
+        /*
         usleep(10000000);
         pthread_mutex_lock(&queueLock);
         std::cout << "Solutions found so far: " << std::to_string(thread_solutions.getNumSolutions()) << std::endl;
         pthread_mutex_unlock(&queueLock);
-        
+        */
 
         for (int i = 0; i < numThreads; ++i) 
             if (pthread_join(threadPool[i], NULL) != 0) 

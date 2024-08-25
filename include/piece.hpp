@@ -9,9 +9,9 @@
 namespace pcs {
 
     struct BB {
-        int left, right, top, bottom; //defined relative to start_square, if at all
+        int left, right, up, down; //defined relative to start_square, if at all
 
-        BB(int l, int r, int t, int b) : left(l), right(r), top(t), bottom(b) {}
+        BB(int l, int r, int u, int d) : left(l), right(r), up(u), down(d) {}
     };
 
     struct Orientation {
