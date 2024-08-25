@@ -32,7 +32,7 @@ void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::stri
 
 
 
-    if (numSolutions == 0) {
+    if (numSolutions == 0 && thread_numSolutions == 0) {
         std::cout << "Looks like there were no solutions found. Exiting program by default." << std::endl;
         return;
     }

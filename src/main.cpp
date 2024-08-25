@@ -27,7 +27,7 @@ int main() {
     Solutions thread_solutions(maxSolutions);
     
     //setNecessaryGlobalOptimizationVariables();
-    slvr::Solver solver(pieceList, solutions, thread_solutions, 64, 20);
+    slvr::Solver solver(pieceList, solutions, thread_solutions, numThreads, batchSize);
     runSolver(solver, pieceList);
 
     /*

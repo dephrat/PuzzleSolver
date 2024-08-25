@@ -1,6 +1,6 @@
 #include "../include/stages.hpp"
 
-int shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
+void shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
     int nT;
     while (true) {
         std::cout << "How many threads? (0 for single-threaded): ";
@@ -13,7 +13,10 @@ int shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cerr << msgs::invalidIntegerInputNumThreadsErrorMessage << std::endl;
             continue;
-        } else numThreads = nT;
+        } else {
+            numThreads = nT;
+            break;
+        }
     }
     if (numThreads) {
         int bS;
@@ -28,7 +31,10 @@ int shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cerr << msgs::invalidIntegerInputBatchSizeErrorMessage << std::endl;
                 continue;
-            } else batchSize = bS;
+            } else {
+                batchSize = bS;
+                break;
+            }
         }
     } else batchSize = 0;
     int mS;
@@ -43,7 +49,10 @@ int shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cerr << msgs::invalidIntegerInputNumSolutionsErrorMessage << std::endl;
             continue;
-        } else maxSolutions = mS;
+        } else {
+            maxSolutions = mS;
+            break;
+        }
     }
 }
 

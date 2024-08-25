@@ -39,7 +39,7 @@ void stage0();
 std::vector<std::string> shellCreatePieceList();
 
 //Stage 2
-int shellPrepSolver(int&, int&, int&);
+void shellPrepSolver(int&, int&, int&);
 void runSolver(slvr::Solver&, const std::vector<std::string>&);
 
 //Stage 3
