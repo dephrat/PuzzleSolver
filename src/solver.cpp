@@ -95,13 +95,15 @@ namespace slvr {
 
     Solver::Solver(const std::vector<std::string>& pieceList, Solutions& solutions, Solutions& thread_solutions, int numThreads, 
     size_t batchSize) 
-    : pieceList(pieceList), solutions(solutions), thread_solutions(thread_solutions), numThreads(numThreads), batchSize(batchSize) {
+    : pieceList(pieceList), solutions(solutions), thread_solutions(thread_solutions), numThreads(numThreads), batchSize(batchSize),
+    useBatching(batchSize > 0) {
         prepBoard();
         prepLocations();
     }
 
     Solver::Solver(const std::vector<std::string>& pieceList, Solutions& solutions, int numThreads, size_t batchSize) 
-    : pieceList(pieceList), solutions(solutions), thread_solutions(solutions), numThreads(numThreads), batchSize(batchSize) {
+    : pieceList(pieceList), solutions(solutions), thread_solutions(solutions), numThreads(numThreads), batchSize(batchSize),
+    useBatching(batchSize > 0) {
         prepBoard();
         prepLocations();
     }
@@ -194,6 +196,10 @@ namespace slvr {
     void* Solver::startup(void* args) {
         Solver* self = static_cast<Solver*>(args);
         while (true) {
+            int numTasksToMove = 0;
+            std::vector<Task> tasksToProcess;
+            Task task;
+
             ///consumer: get task
             pthread_mutex_lock(&(self->queueLock));
             while (self->taskQueue.size() == 0 && self->activeThreads > 0) {
@@ -204,25 +210,27 @@ namespace slvr {
                 pthread_mutex_unlock(&(self->queueLock)); //can't forget about this!
                 break; //exit while loop
             }
-            #if USE_BATCHING
-                int numTasksToMove = std::min(self->taskQueue.size(), self->batchSize);
-                
-                std::vector<Task> tasksToProcess;
+            if (self->useBatching) {
+            //#if USE_BATCHING
+                numTasksToMove = std::min(self->taskQueue.size(), self->batchSize);
                 for (int i = 0; i < numTasksToMove; ++i) {
                     tasksToProcess.push_back(std::move(self->taskQueue.front()));
                     self->taskQueue.pop_front();
                 }
-            #else
-                Task task = std::move(self->taskQueue.front());
+            } else {
+            //#else
+                task = std::move(self->taskQueue.front());
                 self->taskQueue.pop_front();
-            #endif
+            }
+            //#endif
             self->activeThreads++; //this thread took a Task or batch of Tasks, so it's active!
             pthread_mutex_unlock(&(self->queueLock));
             
             ///executor: execute task
             std::vector<Solution> newSolutions;
             std::list<Task> newTasks;
-            #if USE_BATCHING
+            if (self->useBatching) {
+            //#if USE_BATCHING
                 for (int i = 0; i < numTasksToMove; ++i) {
                     if (tasksToProcess[i].current_state.size() == self->pieceList.size() - 1) { //last piece
                         self->execute(tasksToProcess[i], newSolutions);
@@ -230,13 +238,15 @@ namespace slvr {
                         self->execute(tasksToProcess[i], newTasks);
                     }
                 }
-            #else
+            } else {
+            //#else
                 if (task.current_state.size() == self->pieceList.size() - 1) { //last piece
                     self->execute(task, newSolutions);
                 } else {
                     self->execute(task, newTasks);
                 }
-            #endif
+            }
+            //#endif
 
             ///producer: add tasks and solution
             pthread_mutex_lock(&(self->queueLock));

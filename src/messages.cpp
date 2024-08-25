@@ -4,7 +4,7 @@ namespace msgs {
     
     const std::string incorrectNumberPieceOrientationsErrorMessage = "ERROR: Sorry, looks like one of the pieces was defined with more or less than one orientation. Check the documentation for more information on how to resolve this error.";
     const std::string incorrectPieceNameErrorMessage = "ERROR: Sorry, some of the internal piece_names keys don't match their mapped piece's name. Check the documentation for more information on how to resolve this error.";
-    const std::string invalidIntegerInputBatchSizeErrorMessage = "ERROR: Sorry, please enter a valid positive integer less than 2147483648.";
+    const std::string invalidIntegerInputBatchSizeErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputNumSolutionsErrorMessage = "ERROR: Sorry, please enter either -1 or a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputNumThreadsErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";

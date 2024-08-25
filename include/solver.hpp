@@ -64,6 +64,7 @@ namespace slvr {
         int activeThreads = 0;
         int numThreads;
         size_t batchSize;
+        bool useBatching;
         void thread_solve();
 
 

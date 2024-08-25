@@ -21,13 +21,13 @@ void shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
     if (numThreads) {
         int bS;
         while (true) {
-            std::cout << "Thread batch size?: ";
+            std::cout << "Thread batch size? (0 for no batching): ";
             if (!(std::cin >> bS)) {
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cerr << msgs::invalidIntegerInputBatchSizeErrorMessage << std::endl;
                 continue;
-            } else if (bS < 1) {
+            } else if (bS < 0) {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cerr << msgs::invalidIntegerInputBatchSizeErrorMessage << std::endl;
                 continue;
