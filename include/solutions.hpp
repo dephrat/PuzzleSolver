@@ -38,6 +38,11 @@ class Solutions {
             ++numSolutions;
         }
 
+        void addSolutions(std::vector<Solution>& solns) { 
+            solutions.insert(solutions.end(), solns.begin(), solns.end());
+            numSolutions += solns.size();   //MAKE THIS MORE INTELLIGENT! ONLY ADD UP TO MAX SOLUTIONS!!!!!
+        }
+
         //doesn't modify Solutions
         Board constructBoardFromSolution(const Solution& solution, const std::vector<std::string>& pieceList) const;
 

@@ -40,12 +40,12 @@ std::vector<std::string> shellCreatePieceList();
 
 //Stage 2
 int shellPrepSolver();
-void runSolver(slvr::Solver&, const std::vector<std::string>&, Solutions&);
+void runSolver(slvr::Solver&, const std::vector<std::string>&);
 
 //Stage 3
 
 //Stage 4
 //void acceptUserInputAndDisplayCorrespondingInformation();
-void shellDisplayResults(const Solutions&, const std::vector<std::string>&);
+void shellDisplayResults(const slvr::Solver&, const std::vector<std::string>&);
 
 #endif

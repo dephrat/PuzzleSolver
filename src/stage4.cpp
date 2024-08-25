@@ -14,13 +14,23 @@ View all solutions - all
 View piecelist
 option to view as board vs as piece placements?
 */
-void shellDisplayResults(const Solutions& solutions, const std::vector<std::string>& pieceList) {
+void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::string>& pieceList) {
     std::cout << msgs::stage4IntroMessage << std::endl;
+
+    Solutions& solutions = solver.getSolutions();
+    Solutions& thread_solutions = solver.thread_getSolutions();
 
     int numSolutions = solutions.getNumSolutions();
     const std::vector<Solution>& solutionsVector = solutions.getSolutions();
     std::vector<Board> boardsVector(numSolutions);
     std::vector<int> boardsPopulatedVector(numSolutions, 0);
+
+    int thread_numSolutions = thread_solutions.getNumSolutions();
+    const std::vector<Solution>& thread_solutionsVector = thread_solutions.getSolutions();
+    std::vector<Board> thread_boardsVector(thread_numSolutions);
+    std::vector<int> thread_boardsPopulatedVector(thread_numSolutions, 0);
+
+
 
     if (numSolutions == 0) {
         std::cout << "Looks like there were no solutions found. Exiting program by default." << std::endl;
@@ -61,7 +71,31 @@ void shellDisplayResults(const Solutions& solutions, const std::vector<std::stri
                         boardsPopulatedVector[solutionIndex] = 1;
                     }
                     dsply::displayBoard(&(boardsVector[solutionIndex]));
-                } else if (input == "all" || input == "a") {
+                } else if (input == "threadsolution" || input == "ts") {
+                    std::cout << "Which solution would you like to see? [0-" << std::to_string(thread_numSolutions - 1) << "]: ";
+                    int solutionIndex;
+                    if (!(std::cin >> solutionIndex)) {
+                        std::cin.clear();
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        std::cerr << msgs::invalidIntegerInputSolutionsIndexErrorMessage << std::endl;
+                        continue;
+                    } else if (solutionIndex < 0 || solutionIndex > numSolutions - 1) {
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        std::cerr << msgs::invalidIntegerInputSolutionsIndexErrorMessage << std::endl;
+                        continue;
+                    }
+                    const Solution& solution = thread_solutionsVector[solutionIndex];
+                    dsply::displaySolution(solution, pieceList);
+                    if (thread_boardsPopulatedVector[solutionIndex] == 0) {
+                        thread_boardsVector[solutionIndex] = thread_solutions.constructBoardFromSolution(solution, pieceList);
+                        thread_boardsPopulatedVector[solutionIndex] = 1;
+                    }
+                    dsply::displayBoard(&(thread_boardsVector[solutionIndex]));
+                }
+                
+                
+                
+                else if (input == "all" || input == "a") {
 
                 } else if (input == "numsolutions" || input == "ns") {
                     std::cout << "Solutions: " << std::to_string(numSolutions) << "\n";

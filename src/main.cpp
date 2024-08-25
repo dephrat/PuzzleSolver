@@ -18,10 +18,11 @@ int main() {
     //performNecessaryInitializations();
         //includes Solutions for our storage
     Solutions solutions(maxSolutions);
+    Solutions thread_solutions(maxSolutions);
     
     //setNecessaryGlobalOptimizationVariables();
-    slvr::Solver solver(pieceList, solutions);
-    runSolver(solver, pieceList, solutions);
+    slvr::Solver solver(pieceList, solutions, thread_solutions, 64, 100);
+    runSolver(solver, pieceList);
 
     /*
     //Stage 3: Wait for solver to finish
@@ -31,7 +32,7 @@ int main() {
 
     //Stage 4: View results
     std::cout << "How would you like to view the results?" << std::endl;
-    shellDisplayResults(solutions, pieceList);
+    shellDisplayResults(solver, pieceList);
     //acceptUserInputAndDisplayCorrespondingInformation();
 
     std::cout << solutions.getNumSolutions() << std::endl;
