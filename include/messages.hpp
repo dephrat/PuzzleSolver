@@ -8,8 +8,10 @@ namespace msgs {
     extern const std::string illegalEmptyPieceSymbolErrorMessage;
     extern const std::string incorrectNumberPieceOrientationsErrorMessage;
     extern const std::string incorrectPieceNameErrorMessage;
+    extern const std::string invalidIntegerInputBatchSizeErrorMessage;
     extern const std::string invalidIntegerInputErrorMessage;
     extern const std::string invalidIntegerInputNumSolutionsErrorMessage;
+    extern const std::string invalidIntegerInputNumThreadsErrorMessage;
     extern const std::string invalidIntegerInputSolutionsIndexErrorMessage;
     extern const std::string invalidStringInputErrorMessage;
     extern const std::string nullPieceErrorMessage;

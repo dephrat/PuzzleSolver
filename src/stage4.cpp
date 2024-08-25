@@ -32,7 +32,7 @@ void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::stri
 
 
 
-    if (numSolutions == 0) {
+    if (numSolutions == 0 && thread_numSolutions == 0) {
         std::cout << "Looks like there were no solutions found. Exiting program by default." << std::endl;
         return;
     }
@@ -52,6 +52,10 @@ void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::stri
                 std::cout << "What would you like to view?: ";
                 std::cin >> input;
                 if (input == "solution" || input == "s") {
+                    if (numSolutions == 0) {
+                        std::cout << "Looks like the single-threaded approach didn't find any solutions! Maybe you ran multi-threaded?" << std::endl;
+                        continue;
+                    }
                     std::cout << "Which solution would you like to see? [0-" << std::to_string(numSolutions - 1) << "]: ";
                     int solutionIndex;
                     if (!(std::cin >> solutionIndex)) {
@@ -72,6 +76,10 @@ void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::stri
                     }
                     dsply::displayBoard(&(boardsVector[solutionIndex]));
                 } else if (input == "threadsolution" || input == "ts") {
+                    if (thread_numSolutions == 0) {
+                        std::cout << "Looks like the multi-threaded approach didn't find any solutions! Maybe you ran single-threaded?" << std::endl;
+                        continue;
+                    }
                     std::cout << "Which solution would you like to see? [0-" << std::to_string(thread_numSolutions - 1) << "]: ";
                     int solutionIndex;
                     if (!(std::cin >> solutionIndex)) {
@@ -79,7 +87,7 @@ void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::stri
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         std::cerr << msgs::invalidIntegerInputSolutionsIndexErrorMessage << std::endl;
                         continue;
-                    } else if (solutionIndex < 0 || solutionIndex > numSolutions - 1) {
+                    } else if (solutionIndex < 0 || solutionIndex > thread_numSolutions - 1) {
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         std::cerr << msgs::invalidIntegerInputSolutionsIndexErrorMessage << std::endl;
                         continue;

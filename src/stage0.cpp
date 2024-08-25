@@ -114,6 +114,21 @@ void trimOrientations(pcs::Piece* piece) {
     }
 }
 
+void createBoundingBoxes(pcs::Piece* piece) {
+    for (pcs::Orientation& orientation : piece->orientations) {
+        int l = 0, u = 0, r = 0, d = 0;
+        for (const auto& coordinate : orientation.coordinates) {
+            int x = coordinate.first;
+            int y = coordinate.second;
+            l = std::min(l, x);
+            r = std::max(r, x);
+            u = std::min(u, y);
+            d = std::max(d, y);
+        }
+        orientation.boundingBox = pcs::BB(l, r, u, d);
+    }
+}
+
 //generates orientations, sorts orientation coordinates internally, and removes duplicate orientations. 
 //STILL UNTESTED
 void generatePieceOrientations() {
@@ -121,6 +136,11 @@ void generatePieceOrientations() {
         generateOrientationCoords(piece);
         sortOrientations(piece); //internal sorting, makes trimOrientations easier
         trimOrientations(piece);
-        //createBoundingBoxes(piece);
+        createBoundingBoxes(piece);
     }
+}
+
+void stage0() {
+    if (!piecesValidation()) exit(0);
+    generatePieceOrientations();
 }

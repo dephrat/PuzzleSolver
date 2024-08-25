@@ -4,8 +4,10 @@ namespace msgs {
     
     const std::string incorrectNumberPieceOrientationsErrorMessage = "ERROR: Sorry, looks like one of the pieces was defined with more or less than one orientation. Check the documentation for more information on how to resolve this error.";
     const std::string incorrectPieceNameErrorMessage = "ERROR: Sorry, some of the internal piece_names keys don't match their mapped piece's name. Check the documentation for more information on how to resolve this error.";
+    const std::string invalidIntegerInputBatchSizeErrorMessage = "ERROR: Sorry, please enter a valid positive integer less than 2147483648.";
     const std::string invalidIntegerInputErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputNumSolutionsErrorMessage = "ERROR: Sorry, please enter either -1 or a valid non-negative integer less than 2147483648.";
+    const std::string invalidIntegerInputNumThreadsErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputSolutionsIndexErrorMessage = "ERROR: Sorry, please enter a valid integer within the specified range (inclusive).";
     const std::string invalidStringInputErrorMessage = "ERROR: Sorry, looks like that input failed completely. Please try again.";
     const std::string illegalEmptyPieceSymbolErrorMessage = "ERROR: Sorry, the space char (' ') cannot be used as a piece symbol because it represents an empty square in the board. Check the documentation for more information on how to resolve this error.";
@@ -30,6 +32,7 @@ namespace msgs {
         +std::string("exit: exits the program.\n")
         +std::string("view: prompts for one of the following follow-ups.\n")
         +std::string("   solution: prompts for index, then shows the solution at that index.\n")
+        +std::string("   threadsolution: prompts for index, then shows the multithreading-generated solution at that index.\n")
         +std::string("   all: prompts for confirmation, then shows all solutions.\n")
         +std::string("   numsolutions: outputs the number of solutions found.\n")
         +std::string("   piecelist: displays the piece list, which the solver attempted to place in the puzzle grid,\n")
