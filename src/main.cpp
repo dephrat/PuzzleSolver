@@ -22,10 +22,7 @@ int main() {
     runSolver(solver, pieceList, numThreads > 0);
 
     //Stage 4: View results
-    stage4(solver, pieceList) {
-        std::cout << "How would you like to view the results?" << std::endl;
-        shellDisplayResults(solver, pieceList);
-    }
+    shellDisplayResults(solver, pieceList);
 
     
     //acceptUserInputAndDisplayCorrespondingInformation();   
