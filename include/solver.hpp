@@ -42,14 +42,15 @@ namespace slvr {
     public:
         Solutions& getSolutions() const {return solutions;}
         Solutions& thread_getSolutions() const {return thread_solutions;}
+        const std::vector<std::string>& getPieceList() const {return pieceList;}
 
         static void placePiece(const pcs::Piece* piece, int orientation_idx, const Location& location, Task* task);
         static void placePiece(const pcs::Piece* piece, int orientation_idx, const Location& location, Board* board);
         static void removePiece(const pcs::Piece* piece, int orientation_idx, const Location& location, Task* task);
 
-        //Solver(const std::vector<std::string>& pieceList, int maxSolutions = 1); Changed Solver's solutions to a reference
-        Solver(const std::vector<std::string>& pieceList, Solutions& solutions, Solutions& thread_solutions, int numThreads = 1, size_t batchSize = 1);
-        Solver(const std::vector<std::string>& pieceList, Solutions& solutions, int numThreads = 1, size_t batchSize = 1);
+        Solver(const std::vector<std::string>& pieceList, Solutions& solutions, Solutions& thread_solutions, int numThreads, size_t batchSize);
+        //this would be cool but requires that solutions and thread_solutions be values instead of references, meaning I need to pass in pointers to the Solution arguments before moving them in, it's a hassle and frankly low priority
+        //Solver(const std::vector<std::string>& pieceList, Solutions&& solutions, Solutions&& thread_solutions, int numThreads, size_t batchSize);
         void solve(const int pc_idx = 0);
 
         static void* startup(void* args);

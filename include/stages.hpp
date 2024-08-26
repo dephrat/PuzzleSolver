@@ -38,10 +38,10 @@ void sortPieceList(std::vector<std::string>&);
 
 //Stage 2
 void shellPrepSolver(int&, int&, int&);
-void runSolver(slvr::Solver&, const std::vector<std::string>&, bool);
+void runSolver(slvr::Solver&);
 
 //Stage 4
 //void acceptUserInputAndDisplayCorrespondingInformation();
-void shellDisplayResults(const slvr::Solver&, const std::vector<std::string>&);
+void shellDisplayResults(const slvr::Solver&);
 
 #endif

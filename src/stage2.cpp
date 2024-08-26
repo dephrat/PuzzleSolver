@@ -56,7 +56,9 @@ void shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
     }
 }
 
-void runSolver(slvr::Solver& solver, const std::vector<std::string>& pieceList, bool multithreaded) {
+void runSolver(slvr::Solver& solver) {
+    const std::vector<std::string>& pieceList = solver.getPieceList();
+    bool multithreaded = solver.numThreads > 0;
 
     if (pieceList.size() == 0) {
         return;

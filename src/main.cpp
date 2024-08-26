@@ -12,19 +12,12 @@ int main() {
     sortPieceList(pieceList);
 
     //Stage 2: Run solver
-    int numThreads;
-    int batchSize;
-    int maxSolutions;
+    int numThreads, batchSize, maxSolutions;
     shellPrepSolver(numThreads, batchSize, maxSolutions);
-    Solutions solutions(maxSolutions);
-    Solutions thread_solutions(maxSolutions);
+    Solutions solutions(maxSolutions), thread_solutions(maxSolutions);
     slvr::Solver solver(pieceList, solutions, thread_solutions, numThreads, batchSize);
-    runSolver(solver, pieceList, numThreads > 0);
+    runSolver(solver);
 
     //Stage 4: View results
-    shellDisplayResults(solver, pieceList);
-
-    
-    //acceptUserInputAndDisplayCorrespondingInformation();   
-    
+    shellDisplayResults(solver);    
 }

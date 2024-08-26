@@ -14,11 +14,12 @@ View all solutions - all
 View piecelist
 option to view as board vs as piece placements?
 */
-void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::string>& pieceList) {
+void shellDisplayResults(const slvr::Solver& solver) {
     std::cout << msgs::stage4IntroMessage << std::endl;
 
-    Solutions& solutions = solver.getSolutions();
-    Solutions& thread_solutions = solver.thread_getSolutions();
+    const Solutions& solutions = solver.getSolutions();
+    const Solutions& thread_solutions = solver.thread_getSolutions();
+    const std::vector<std::string>& pieceList = solver.getPieceList();
 
     int numSolutions = solutions.getNumSolutions();
     const std::vector<Solution>& solutionsVector = solutions.getSolutions();
