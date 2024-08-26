@@ -73,7 +73,7 @@ namespace pcs {
                      {1,0}
     };
 
-/*
+
     std::vector<std::pair<int, int>> stupid_coords = {
         {-2,-1},{-2,0}, {-2, 5},
 
@@ -82,7 +82,7 @@ namespace pcs {
                 {2,0} ,
                 {100,0} 
     };
-*/
+
 
     //Names and symbols must be unique! Also, symbols can't be ' '.
     Piece red = Piece("red", 'r', {Orientation(red_coords, genericBB)});
@@ -94,7 +94,7 @@ namespace pcs {
     Piece green = Piece("green", 'g', {Orientation(green_coords, genericBB)});
     Piece lime = Piece("lime", 'l', {Orientation(lime_coords, genericBB)});
     Piece purple = Piece("purple", 'p', {Orientation(purple_coords, genericBB)});
-    //Piece stupid = Piece("stupid", 's', {Orientation(stupid_coords, genericBB)});
+    Piece stupid = Piece("stupid", 's', {Orientation(stupid_coords, genericBB)});
 
     //recall that if keys are repeated, only the more recent entry will be included
     const std::unordered_map<std::string, Piece*> piece_names = {
@@ -107,7 +107,7 @@ namespace pcs {
         {"green", &green},
         {"lime", &lime},
         {"purple", &purple},
-        //{"stupid", &stupid} //I was just using this for testing the displayPiece functionality
+        {"stupid", &stupid} //I was just using this for testing the displayPiece functionality
     };
 
 }

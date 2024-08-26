@@ -105,7 +105,7 @@ void displayPiece(const pcs::Piece* piece, int orientation_idx) {
     }
 }
 
-void displayPieceList(std::vector<std::string>& pieceList, bool allDetails) {
+void displayPieceList(const std::vector<std::string>& pieceList, bool allDetails) {
     for (const std::string& s : pieceList) {
         if (allDetails) dsply::displayPiece(pcs::piece_names.at(s));
         else std::cout << s << std::endl;

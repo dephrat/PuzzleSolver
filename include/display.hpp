@@ -25,7 +25,7 @@ namespace dsply {
     //displayPiece() requires that Stage0 has already been completed (it needs the orientations to be sorted)
     void displayPiece(const pcs::Piece* piece, int orientation_idx = 0);
 
-    void displayPieceList(std::vector<std::string>& pieceList, bool allDetails = false);
+    void displayPieceList(const std::vector<std::string>& pieceList, bool allDetails = false);
 
     void displayAllPieces(bool allDetails = false);
 

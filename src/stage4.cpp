@@ -101,14 +101,12 @@ void shellDisplayResults(const slvr::Solver& solver, const std::vector<std::stri
                     dsply::displayBoard(&(thread_boardsVector[solutionIndex]));
                 }
                 
-                
-                
                 else if (input == "all" || input == "a") {
 
                 } else if (input == "numsolutions" || input == "ns") {
                     std::cout << "Solutions: " << std::to_string(numSolutions) << "\n";
                 } else if (input == "piecelist" || input == "pl") {
-                    
+                    dsply::displayPieceList(pieceList);
                 } else {
                     std::cout << msgs::unrecognizedCommandErrorMessage(input) << std::endl;
                 }

@@ -106,6 +106,6 @@ void sortPieceList(std::vector<std::string>& pieceList) {
         int size1 = (bb1.down - bb1.up) * (bb1.right - bb1.left);
         const auto& bb2 = pcs::piece_names.at(b)->orientations[0].boundingBox;
         int size2 = (bb2.down - bb2.up) * (bb2.right - bb2.left);
-        return size1 < size2;
+        return size1 > size2;
     });
 }
