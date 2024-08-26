@@ -5,41 +5,29 @@
 
 int main() {
     //Stage 0: Initial condition checking
-    //if (!piecesValidation()) exit(0);
-    //generatePieceOrientations();
     stage0();
 
     //Stage 1: Create/edit piece list
     std::vector<std::string> pieceList = shellCreatePieceList();
     sortPieceList(pieceList);
 
-
     //Stage 2: Run solver
-    //promptUserForInput(); //optimization input
     int numThreads;
     int batchSize;
     int maxSolutions;
     shellPrepSolver(numThreads, batchSize, maxSolutions);
-
-    //int maxSolutions = shellPrepSolver();
-    //performNecessaryInitializations();
-        //includes Solutions for our storage
     Solutions solutions(maxSolutions);
     Solutions thread_solutions(maxSolutions);
-    
-    //setNecessaryGlobalOptimizationVariables();
     slvr::Solver solver(pieceList, solutions, thread_solutions, numThreads, batchSize);
     runSolver(solver, pieceList, numThreads > 0);
 
-    /*
-    //Stage 3: Wait for solver to finish
-    waitForSolverToFinish();
-    std::cout << "Solving complete!" << std::endl;
-    */
-
     //Stage 4: View results
-    std::cout << "How would you like to view the results?" << std::endl;
-    shellDisplayResults(solver, pieceList);
+    stage4(solver, pieceList) {
+        std::cout << "How would you like to view the results?" << std::endl;
+        shellDisplayResults(solver, pieceList);
+    }
+
+    
     //acceptUserInputAndDisplayCorrespondingInformation();   
     
 }
