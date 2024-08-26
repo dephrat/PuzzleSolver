@@ -15,7 +15,7 @@ namespace msgs {
     const std::string outOfBoundsOrientationIndexDisplayPieceErrorMessage = "ERROR: Sorry, looks like someone tried to call displayPiece with an illegal orientation index. Check the documentation for more information on how to resolve this error.";
     const std::string repeatedPieceSymbolErrorMessage = "ERROR: Sorry, some of the piece symbols were used for multiple pieces. Please ensure each piece uses a unique symbol. Check the documentation for more information on how to resolve this error.";
     const std::string stage1IntroMessage = "Stage 1: Use commands to put together a list of pieces. The solver will attempt to place these pieces into the grid. Enter 'help' for a list of accepted commands.";
-    const std::string stage4IntroMessage = "Stage 4: Use commands to view the results. Enter 'help' for a list of accepted commands.";
+    const std::string stage3IntroMessage = "Stage 3: Use commands to view the results. Enter 'help' for a list of accepted commands.";
     
     const std::string stage1CommandsMessage = std::string("\nhelp: lists all commands.\n") //update to include aliases, figure out how to stylize LOW PRIORITY
         +std::string("view: prompts for one of the three following follow-ups.\n")
@@ -27,7 +27,7 @@ namespace msgs {
         +std::string("continue: prompts to confirm the current piece list, then begins solving the puzzle.\n")
         +std::string("exit: exits the program.\n");
 
-    const std::string stage4CommandsMessage = std::string("\nhelp: lists all commands.\n")
+    const std::string stage3CommandsMessage = std::string("\nhelp: lists all commands.\n")
         +std::string("validate: performs a check that all solutions are valid.\n")
         +std::string("exit: exits the program.\n")
         +std::string("view: prompts for one of the following follow-ups.\n")
@@ -35,6 +35,7 @@ namespace msgs {
         +std::string("   threadsolution: prompts for index, then shows the multithreading-generated solution at that index.\n")
         +std::string("   all: prompts for confirmation, then shows all solutions.\n")
         +std::string("   numsolutions: outputs the number of solutions found.\n")
+        +std::string("   numthreadsolutions: outputs the number of solutions found.\n")
         +std::string("   piecelist: displays the piece list, which the solver attempted to place in the puzzle grid,\n")
         +std::string("      then asks if you'd like to display each piece's info.\n");
         

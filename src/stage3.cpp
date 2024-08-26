@@ -15,7 +15,7 @@ View piecelist
 option to view as board vs as piece placements?
 */
 void shellDisplayResults(const slvr::Solver& solver) {
-    std::cout << msgs::stage4IntroMessage << std::endl;
+    std::cout << msgs::stage3IntroMessage << std::endl;
 
     const Solutions& solutions = solver.getSolutions();
     const Solutions& thread_solutions = solver.thread_getSolutions();
@@ -43,7 +43,7 @@ void shellDisplayResults(const slvr::Solver& solver) {
         std::cout << "Your command: ";
         if (std::cin >> input) {
             if (input == "help" || input == "h") {
-                std::cout << msgs::stage4CommandsMessage << std::endl;
+                std::cout << msgs::stage3CommandsMessage << std::endl;
             } else if (input == "validate" || input == "va") {
                 
             } else if (input == "exit" || input == "e") {
@@ -106,6 +106,8 @@ void shellDisplayResults(const slvr::Solver& solver) {
 
                 } else if (input == "numsolutions" || input == "ns") {
                     std::cout << "Solutions: " << std::to_string(numSolutions) << "\n";
+                } else if (input == "numthreadsolutions" || input == "nts") {
+                    std::cout << "Thread solutions: " << std::to_string(thread_numSolutions) << "\n";
                 } else if (input == "piecelist" || input == "pl") {
                     dsply::displayPieceList(pieceList);
                 } else {
@@ -125,7 +127,7 @@ void shellDisplayResults(const slvr::Solver& solver) {
 
 /*
 void acceptUserInputAndDisplayCorrespondingInformation(somehow get access to the Solutions) {
-    std::cout << msgs::stage4IntroMessage << std::endl;
+    std::cout << msgs::stage3IntroMessage << std::endl;
     while (true) {
         get user input
         if input is show 1st solution:

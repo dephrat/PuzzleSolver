@@ -23,7 +23,7 @@
 #include <chrono>
 #include "solver.hpp"
 
-//Stage 4
+//Stage 3
 using Solution = std::vector<std::pair<Location, int>>;
 
 
@@ -40,7 +40,7 @@ void sortPieceList(std::vector<std::string>&);
 void shellPrepSolver(int&, int&, int&);
 void runSolver(slvr::Solver&);
 
-//Stage 4
+//Stage 3
 //void acceptUserInputAndDisplayCorrespondingInformation();
 void shellDisplayResults(const slvr::Solver&);
 

@@ -18,6 +18,6 @@ int main() {
     slvr::Solver solver(pieceList, solutions, thread_solutions, numThreads, batchSize);
     runSolver(solver);
 
-    //Stage 4: View results
+    //Stage 3: View results
     shellDisplayResults(solver);    
 }
