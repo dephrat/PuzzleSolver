@@ -1,7 +1,7 @@
 CXXFLAGS = -std=c++2a -Wall -g -MMD
 CXXCMD = g++ $(CXXFLAGS)
 
-STAGE_NUMS = 0 1 2 3 4
+STAGE_NUMS = 0 1 2 3
 STAGE_NAMES = $(STAGE_NUMS:%=stage%)
 
 SRC_FILENAMES = display main messages piece solver solutions $(STAGE_NAMES)

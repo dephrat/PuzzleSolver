@@ -101,13 +101,6 @@ namespace slvr {
         prepLocations();
     }
 
-    Solver::Solver(const std::vector<std::string>& pieceList, Solutions& solutions, int numThreads, size_t batchSize) 
-    : pieceList(pieceList), solutions(solutions), thread_solutions(solutions), numThreads(numThreads), batchSize(batchSize),
-    useBatching(batchSize > 0) {
-        prepBoard();
-        prepLocations();
-    }
-
     void Solver::solve(const int pc_idx) { //default value already given in header file, are we allowed it here, and will it give an error?
         const pcs::Piece* piece = pcs::piece_names.at(pieceList[pc_idx]);
         for (const Location& location : locations) {
