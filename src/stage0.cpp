@@ -8,6 +8,7 @@ bool piecesValidation() {
     //each piece name in piece_names matches the name of the piece it maps to
     //each piece has a symbol other than ' ' (the empty char)
     //each piece's symbol is unique
+    //UNCHECKED each piece contains a cross centered at 0,0 (how do I even do this with a vector?)
     std::unordered_set<char> symbols;
     for (const std::pair<std::string, pcs::Piece*>& p : pcs::piece_names) {
         //Check that the piece has exactly one orientations

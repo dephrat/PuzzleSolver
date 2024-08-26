@@ -27,6 +27,52 @@ namespace pcs {
                {1,0}, 
     };
 
+    std::vector<std::pair<int, int>> cyan_coords = {
+        {-2,-1},{-2,0},
+                {-1,0},
+         {0,-1},{0,0},{0,1},
+                {1,0},
+    };
+
+    std::vector<std::pair<int, int>> pink_coords = {
+        {-2,-1},{-2,0},
+                {-1,0},
+         {0,-1},{0,0},{0,1},{0,2},
+                {1,0},
+    };
+
+    std::vector<std::pair<int, int>> yellow_coords = {
+        {-2,-1},{-2,0},
+                {-1,0},
+         {0,-1},{0,0},{0,1},{0,2},
+                {1,0},
+                {2,0},
+    };
+
+    std::vector<std::pair<int, int>> green_coords = {
+        {-2,-1},{-2,0},
+                {-1,0},
+  {0,-2},{0,-1},{0,0},{0,1},{0,2},
+                {1,0},
+                {2,0},
+    };
+
+    std::vector<std::pair<int, int>> lime_coords = {
+        {-2,-1},{-2,0},
+                {-1,0},
+                {0,0},
+  {1,-2},{1,-1},{1,0},{1,1},
+                {2,0},
+    };
+
+    std::vector<std::pair<int, int>> purple_coords = {
+             {-3,-1},{-3,0},
+                     {-2,0},
+                     {-1,0},
+{0,-3},{0,-2},{0,-1},{0,0},{0,1},
+                     {1,0}
+    };
+
 /*
     std::vector<std::pair<int, int>> stupid_coords = {
         {-2,-1},{-2,0}, {-2, 5},
@@ -42,6 +88,12 @@ namespace pcs {
     Piece red = Piece("red", 'r', {Orientation(red_coords, genericBB)});
     Piece blue = Piece("blue", 'b', {Orientation{blue_coords, genericBB}});
     Piece orange = Piece("orange", 'o', {Orientation(orange_coords, genericBB)});
+    Piece cyan = Piece("cyan", 'c', {Orientation(cyan_coords, genericBB)});
+    Piece pink = Piece("pink", 'k', {Orientation(pink_coords, genericBB)});
+    Piece yellow = Piece("yellow", 'y', {Orientation(yellow_coords, genericBB)});
+    Piece green = Piece("green", 'g', {Orientation(green_coords, genericBB)});
+    Piece lime = Piece("lime", 'l', {Orientation(lime_coords, genericBB)});
+    Piece purple = Piece("purple", 'p', {Orientation(purple_coords, genericBB)});
     //Piece stupid = Piece("stupid", 's', {Orientation(stupid_coords, genericBB)});
 
     //recall that if keys are repeated, only the more recent entry will be included
@@ -49,6 +101,12 @@ namespace pcs {
         {"red", &red},
         {"blue", &blue},
         {"orange", &orange},
+        {"cyan", &cyan},
+        {"pink", &pink},
+        {"yellow", &yellow},
+        {"green", &green},
+        {"lime", &lime},
+        {"purple", &purple},
         //{"stupid", &stupid} //I was just using this for testing the displayPiece functionality
     };
 
