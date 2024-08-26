@@ -99,3 +99,13 @@ std::vector<std::string> shellCreatePieceList() {
         }
     }
 }
+
+void sortPieceList(std::vector<std::string>& pieceList) {
+    std::sort(pieceList.begin(), pieceList.end(), [](const std::string& a, const std::string& b){
+        const auto& bb1 = pcs::piece_names.at(a)->orientations[0].boundingBox;
+        int size1 = (bb1.down - bb1.up) * (bb1.right - bb1.left);
+        const auto& bb2 = pcs::piece_names.at(b)->orientations[0].boundingBox;
+        int size2 = (bb2.down - bb2.up) * (bb2.right - bb2.left);
+        return size1 < size2;
+    });
+}

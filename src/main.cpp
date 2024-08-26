@@ -11,6 +11,7 @@ int main() {
 
     //Stage 1: Create/edit piece list
     std::vector<std::string> pieceList = shellCreatePieceList();
+    sortPieceList(pieceList);
 
 
     //Stage 2: Run solver

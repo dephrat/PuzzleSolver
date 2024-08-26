@@ -12,6 +12,7 @@
 #include "piece.hpp"
 
 //Stage 1
+//#include <algorithm>
 //#include <iostream>
 //#include "messages.hpp"
 //#include "piece.hpp"
@@ -37,6 +38,7 @@ void stage0();
 
 //Stage 1
 std::vector<std::string> shellCreatePieceList();
+void sortPieceList(std::vector<std::string>&);
 
 //Stage 2
 void shellPrepSolver(int&, int&, int&);
