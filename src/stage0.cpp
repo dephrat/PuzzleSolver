@@ -142,6 +142,8 @@ void generatePieceOrientations() {
 }
 
 void stage0() {
+    std::cout << "Validating pieces" << std::endl;
     if (!piecesValidation()) exit(0);
+    std::cout << "Generating piece orientations" << std::endl;
     generatePieceOrientations();
 }
