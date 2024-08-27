@@ -70,4 +70,7 @@ int main() {
     std::cout << "Variance: " << std::to_string(variance) << std::endl;
 }
 
-//single threaded: 4.3, var 3.something
+//single threaded: 4.3, var 3.something (100 iterations)
+//multithreaded with broadcast: 3.484103, var 0.457572 (25 iterations)
+//multithreaded with signal: 4.467058, var 1.754681 (25 iterations)
+//multithreaded with broadcast: 2.982 var 0.068610 (10 iterations)
