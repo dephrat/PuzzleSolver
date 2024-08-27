@@ -4,6 +4,7 @@
 //#include <cassert>
 #include <array>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <utility>
 #include <vector>
@@ -23,7 +24,7 @@ using Solution = std::vector<std::pair<Location, int>>; //pair<Location, orienta
 namespace dsply {
 
     //displayPiece() requires that Stage0 has already been completed (it needs the orientations to be sorted)
-    void displayPiece(const pcs::Piece* piece, int orientation_idx = 0);
+    void displayPiece(const pcs::Piece* piece, size_t orientation_idx = 0);
 
     void displayPieceList(const std::vector<std::string>& pieceList, bool allDetails = false);
 
