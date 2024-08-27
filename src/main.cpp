@@ -24,7 +24,9 @@ int main() {
     std::vector<double> solveTimes;
 
 
-    int numIterations = 100;
+    int numIterations;
+    std::cout << "numiterations: ";
+    std::cin >> numIterations;
     for (int i = 0; i < numIterations; ++i) {
         std::cout << "Starting benchmark iteration " << std::to_string(i) << std::endl;
         //Stage 1: Create/edit piece list
