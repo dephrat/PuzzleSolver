@@ -1,0 +1,10 @@
+create
+3
+red
+blue
+orange
+continue
+Y
+0
+-1
+e
