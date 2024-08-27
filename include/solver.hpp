@@ -2,6 +2,7 @@
 #define SOLVER_HPP
 
 #include <array>
+#include <chrono>
 #include <utility>
 #include <vector>
 
