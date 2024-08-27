@@ -47,8 +47,8 @@ void shellDisplayResults(const slvr::Solver& solver) {
             } else if (input == "validate" || input == "va") {
                 
             } else if (input == "exit" || input == "e") {
-                std::cout << "Exiting the program." << std::endl;
-                exit(0); 
+                std::cout << "Exiting stage 3." << std::endl;
+                return;
             } else if (input == "view" || input == "v") {
                 std::cout << "What would you like to view?: ";
                 std::cin >> input;
