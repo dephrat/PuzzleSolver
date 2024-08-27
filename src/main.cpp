@@ -7,6 +7,11 @@
 #include <fstream>
 
 int main() {
+    int numIterations;
+    std::cout << "numiterations: ";
+    std::cin >> numIterations;
+
+
     //Stage 0: Initial condition checking
     stage0();
 
@@ -25,9 +30,7 @@ int main() {
     std::vector<double> solveTimes;
 
 
-    int numIterations;
-    std::cout << "numiterations: ";
-    std::cin >> numIterations;
+    
     for (int i = 0; i < numIterations; ++i) {
         std::cout << "Starting benchmark iteration " << std::to_string(i) << std::endl;
         //Stage 1: Create/edit piece list
