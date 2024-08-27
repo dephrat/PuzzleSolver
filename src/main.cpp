@@ -10,13 +10,16 @@ int main() {
     int numIterations;
     std::cout << "numiterations: ";
     std::cin >> numIterations;
+    std::string fileName;
+    std::cout << "file name: ";
+    std::cin >> fileName;
 
 
     //Stage 0: Initial condition checking
     stage0();
 
     //open file 
-    std::ifstream inputFile("thread_input.txt");
+    std::ifstream inputFile(fileName);
     if (!inputFile) {
         std::cerr << "Couldn't open input file" << std::endl;
         return 1;
