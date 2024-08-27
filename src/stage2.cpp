@@ -63,10 +63,7 @@ void runSolver(slvr::Solver& solver) {
     if (pieceList.size() == 0) {
         return;
     }
-
-    using Time = std::chrono::steady_clock;
-    std::chrono::duration<double, std::milli> fp_ms;
-    const auto start = Time::now();
+    
     if (multithreaded) {
         solver.thread_solve();
         //thread benchmarking goes here
@@ -74,8 +71,5 @@ void runSolver(slvr::Solver& solver) {
         solver.solve();
         //no-thread benchmarking goes here
     }
-    const auto end = Time::now();
-    fp_ms = end - start;
-    std::cout << "Solving finished. Time taken (s): " << fp_ms.count()/1000 << std::endl;
 
 }

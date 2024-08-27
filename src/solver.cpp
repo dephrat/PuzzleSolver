@@ -223,7 +223,6 @@ namespace slvr {
             std::vector<Solution> newSolutions;
             std::list<Task> newTasks;
             if (self->useBatching) {
-            //#if USE_BATCHING
                 for (int i = 0; i < numTasksToMove; ++i) {
                     if (tasksToProcess[i].current_state.size() == self->pieceList.size() - 1) { //last piece
                         self->execute(tasksToProcess[i], newSolutions);
@@ -232,14 +231,12 @@ namespace slvr {
                     }
                 }
             } else {
-            //#else
                 if (task.current_state.size() == self->pieceList.size() - 1) { //last piece
                     self->execute(task, newSolutions);
                 } else {
                     self->execute(task, newTasks);
                 }
             }
-            //#endif
 
             ///producer: add tasks and solution
             pthread_mutex_lock(&(self->queueLock));

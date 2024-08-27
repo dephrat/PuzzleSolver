@@ -7,35 +7,37 @@
 #include <fstream>
 
 int main() {
+    /*
     int numIterations;
     std::cout << "numiterations: ";
     std::cin >> numIterations;
     std::string fileName;
     std::cout << "file name: ";
     std::cin >> fileName;
-
-
-    //Stage 0: Initial condition checking
-    stage0();
-
     //open file 
     std::ifstream inputFile(fileName);
     if (!inputFile) {
         std::cerr << "Couldn't open input file" << std::endl;
         return 1;
     }
+    */
+
+    //Stage 0: Initial condition checking
+    stage0();
+
+    
     
 
     //direct cin to read from the file
-    std::cin.rdbuf(inputFile.rdbuf());
+    //std::cin.rdbuf(inputFile.rdbuf());
 
-    double averageTime = 0;
-    std::vector<double> solveTimes;
+    //double averageTime = 0;
+    //std::vector<double> solveTimes;
 
 
     
-    for (int i = 0; i < numIterations; ++i) {
-        std::cout << "Starting benchmark iteration " << std::to_string(i) << std::endl;
+    //for (int i = 0; i < numIterations; ++i) {
+    //    std::cout << "Starting benchmark iteration " << std::to_string(i) << std::endl;
         //Stage 1: Create/edit piece list
         std::vector<std::string> pieceList = shellCreatePieceList();
         sortPieceList(pieceList);
@@ -55,8 +57,8 @@ int main() {
         fp_ms = end - start;
         auto solveTime = fp_ms.count() / 1000;
         std::cout << "Solving finished. Time taken (s): " << solveTime << std::endl;
-        averageTime += solveTime;
-        solveTimes.push_back(solveTime);
+    //    averageTime += solveTime;
+    //    solveTimes.push_back(solveTime);
 
 
         //Stage 3: View results
@@ -64,19 +66,19 @@ int main() {
 
 
 
-        inputFile.clear();
+    //    inputFile.clear();
         //reset file pointer
-        inputFile.seekg(0, std::ios::beg);
-    }
+    //    inputFile.seekg(0, std::ios::beg);
+    //}
 
-    averageTime /= numIterations;
-    double variance = 0;
-    for (auto x : solveTimes) {
-        variance += (x-averageTime) * (x-averageTime);
-    }
-    variance /= numIterations;
-    std::cout << "Average time: " << std::to_string(averageTime) << std::endl;
-    std::cout << "Variance: " << std::to_string(variance) << std::endl;
+    //averageTime /= numIterations;
+    //double variance = 0;
+    //for (auto x : solveTimes) {
+    //    variance += (x-averageTime) * (x-averageTime);
+    //}
+    //variance /= numIterations;
+    //std::cout << "Average time: " << std::to_string(averageTime) << std::endl;
+    //std::cout << "Variance: " << std::to_string(variance) << std::endl;
 }
 
 //single threaded: 4.3, var 3.something (100 iterations)
