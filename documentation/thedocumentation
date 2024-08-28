@@ -34,11 +34,3 @@ NOTE: There's an edge case during 'make'.
     - otherwise, maybe create a new thread whose sole purpose is to place the remaining tasks into the queue while 
         - the original thread goes to execute on its batch of tasks.
     signal one or many to wake up depending on the size of the queue compared to batch_size
-
-
-
-Before claude changes:
-100,1000,-1: 384.096
-100,1000,-1: 381.999
-
-After claude changes:
