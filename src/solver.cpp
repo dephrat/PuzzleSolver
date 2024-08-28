@@ -40,10 +40,10 @@ namespace slvr {
             for (const Location& coordinate : orientation.coordinates) {
                 int row = coordinate.first + location.first;
                 int col = coordinate.second + location.second;
-                if (row < 0 || row >= 10 || col < 0 || col >= 10) { //maybe similar optimization here as in placePiece()?
+                /*if (row < 0 || row >= 10 || col < 0 || col >= 10) { //maybe similar optimization here as in placePiece()?
                     placeable = false;
                     break;
-                }
+                }*/
                 if ((*board)[row * 10 + col] != ' ') { //which would likely affect this as well
                     placeable = false;
                     break;
