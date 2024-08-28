@@ -24,6 +24,7 @@ namespace msgs {
         +std::string("   piecelist: displays current piece list, which the solver will attempt to place in the puzzle grid,\n")
         +std::string("      then asks if you'd like to display each piece's info.\n")
         +std::string("create: prompts you to create the piece list to be used in the puzzle.\n")
+        +std::string("createoriginal: uses the piece list from the original puzzle.\n")
         +std::string("continue: prompts to confirm the current piece list, then begins solving the puzzle.\n")
         +std::string("exit: exits the program.\n");
 

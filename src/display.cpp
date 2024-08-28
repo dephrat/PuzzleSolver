@@ -6,7 +6,8 @@
 
 namespace dsply {
 
-void displayPiece(const pcs::Piece* piece, size_t orientation_idx) {
+//display piece name and layout
+void displayPiece(const pcs::Piece* piece, int orientation_idx) {
     if (orientation_idx == -1) {
         for (size_t i = 0; i < piece->orientations.size(); ++i) {
             displayPiece(piece, i);
