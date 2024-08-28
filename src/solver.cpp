@@ -25,6 +25,7 @@ namespace slvr {
         int row = location.first, col = location.second;
         return bb.left + col >= 0 && bb.right + col < 10 && bb.up + row >= 0 && bb.down + row < 10;
     }
+    
     std::vector<int> Solver::checkPlacement(const pcs::Piece* piece, const Location& location, const Board* board) {
         //return true for the orientations that would fit at current Location
         std::vector<int> ret;
@@ -90,11 +91,10 @@ namespace slvr {
             std::vector<int> result = checkPlacement(piece, location, &(task.board));
             for (int i : result) {
                 placePiece(piece, i, location, &task);
-                if (pc_idx < pieceList.size() - 1) {
+                if (pc_idx < pieceList.size() - 1)
                     solve(pc_idx + 1);
-                } else {
+                else
                     solutions.addSolution(task.current_state);
-                }
                 if (solutions.maxSolutionsReached()) return;
                 removePiece(piece, i, location, &task);
             }
@@ -135,8 +135,7 @@ namespace slvr {
             int numTasksToMove = 0;
             std::vector<Task> tasksToProcess;
             Task task;
-
-            ///consumer: get task
+            //consumer: get task
             pthread_mutex_lock(&(self->queueLock));
             while (self->taskQueue.size() == 0 && self->activeThreads > 0) {
                 pthread_cond_wait(&(self->queueCond), &(self->queueLock));
@@ -158,8 +157,7 @@ namespace slvr {
             }
             self->activeThreads++; //this thread took a Task or batch of Tasks, so it's active!
             pthread_mutex_unlock(&(self->queueLock));
-            
-            ///executor: execute task
+            //executor: execute task
             std::vector<Solution> newSolutions;
             std::list<Task> newTasks;
             if (self->useBatching) {
@@ -177,8 +175,7 @@ namespace slvr {
                     self->execute(task, newTasks);
                 }
             }
-
-            ///producer: add tasks and solution
+            //producer: add tasks and solution
             pthread_mutex_lock(&(self->queueLock));
             self->taskQueue.splice(self->taskQueue.end(), newTasks);
             self->thread_solutions.addSolutions(newSolutions);

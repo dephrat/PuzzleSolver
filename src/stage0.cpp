@@ -56,7 +56,7 @@ inline void rotate(std::vector<std::pair<int, int>>& coordinates) {
     }
 }
 void generateOrientationCoords(pcs::Piece* piece) {
-    std::vector<std::pair<int, int>> coordinates = piece->orientations[0].coordinates; //Don't make this a reference! We leave orientations[0].coordinates untouched! (Until sortOrientations)
+    std::vector<std::pair<int, int>> coordinates = piece->orientations[0].coordinates;
     //rotate once
     rotate(coordinates);
     //create Orientation and add to piece.orientations
@@ -74,7 +74,6 @@ void generateOrientationCoords(pcs::Piece* piece) {
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
-    
 }
 
 inline void sortOrientations(pcs::Piece* piece) {
