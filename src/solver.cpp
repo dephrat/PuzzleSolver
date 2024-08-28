@@ -20,35 +20,28 @@ namespace slvr {
             for (int j = 0; j < 10; j++)
                 locations.push_back(std::make_pair(i, j));
     }
-
-    inline bool inBounds(const Location& location, const pcs::BB& bb) {
-        int x = location.first, y = location.second;
-        return bb.left + x >= 0 && bb.right + x < 10 && bb.up + y >= 0 && bb.down + y < 10;
-    }
+    
     std::vector<int> Solver::checkPlacement(const pcs::Piece* piece, const Location& location, const Board* board) {
         //return true for the orientations that would fit at current Location
-
         std::vector<int> ret;
-        bool placeable;
-
+        ret.reserve(piece->orientations.size());
+        int offset_row = location.first;
+        int offset_col = location.second;
         for (int i = 0; i < piece->orientations.size(); i++) {
             const pcs::Orientation& orientation = piece->orientations[i];
-            if (!inBounds(location, orientation.boundingBox)) {
+            const pcs::BB& bb = orientation.boundingBox;
+            if (bb.left+offset_row>=0 && bb.right+offset_row<10 && bb.up+offset_col>=0 && bb.down+offset_col<10) {
+            //if (!inBounds(location, orientation.boundingBox)) {
                 continue;
             }
-            placeable = true;
+            bool placeable = true;
             for (const Location& coordinate : orientation.coordinates) {
-                int row = coordinate.first + location.first;
-                int col = coordinate.second + location.second;
-                if (row < 0 || row >= 10 || col < 0 || col >= 10) { //maybe similar optimization here as in placePiece()?
+                int row = coordinate.first + offset_row;
+                int col = coordinate.second + offset_col;
+                if ((*board)[row * 10 + col] != ' ') {
                     placeable = false;
                     break;
                 }
-                if ((*board)[row * 10 + col] != ' ') { //which would likely affect this as well
-                    placeable = false;
-                    break;
-                }//note that these previous two conditions could be merged bc they do the same thing - just keeping them separate for now
-                //because of the possibility of future optimization, in which case I want it to be easily visible
             }
             if (placeable) ret.push_back(i);
         }
@@ -261,12 +254,7 @@ namespace slvr {
             if (pthread_create(&threadPool[i], NULL, startup, this) != 0) 
                 std::cerr << "Failed to create thread" << std::endl; 
 
-        /*
-        usleep(10000000);
-        pthread_mutex_lock(&queueLock);
-        std::cout << "Solutions found so far: " << std::to_string(thread_solutions.getNumSolutions()) << std::endl;
-        pthread_mutex_unlock(&queueLock);
-        */
+      
 
         for (int i = 0; i < numThreads; ++i) 
             if (pthread_join(threadPool[i], NULL) != 0) 
