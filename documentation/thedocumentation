@@ -18,3 +18,19 @@ NOTE: There's an edge case during 'make'.
         so the Makefile doesn't know that header modifications are relevant to the .o file.
 
     TLDR if you change the makefile, run make clean. There are ways that take less time to compile but this is the easiest way.
+
+
+
+
+    ideas to improve speed:
+    try storing locations in the task, and removing locations that get populated.
+    - task.locations holds all the empty squares in the grid
+    - every time you place a piece, all the squares in that piece, shifted by the placement location, are guaranteed to be
+        - on empty squares in the task board
+    - so just remove them from the task location
+    have threads hold back one batchSize of their generated results, continuing until they don't have any more (queue is empty)
+    - maybe after completing tasks, you check if you can get the lock.
+    - if you can, put excess tasks in, release, and execute again, and just cycle
+    - otherwise, maybe create a new thread whose sole purpose is to place the remaining tasks into the queue while 
+        - the original thread goes to execute on its batch of tasks.
+    signal one or many to wake up depending on the size of the queue compared to batch_size

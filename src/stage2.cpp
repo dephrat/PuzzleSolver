@@ -51,6 +51,7 @@ void shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
             continue;
         } else {
             maxSolutions = mS;
+            std::cout << "Solving now..." << std::endl;
             break;
         }
     }
@@ -63,7 +64,7 @@ void runSolver(slvr::Solver& solver) {
     if (pieceList.size() == 0) {
         return;
     }
-    
+
     if (multithreaded) {
         solver.thread_solve();
         //thread benchmarking goes here
