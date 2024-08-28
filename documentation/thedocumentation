@@ -40,3 +40,7 @@ NOTE: There's an edge case during 'make'.
 380
 368.218
 365.801
+
+after removing coordinate-wise boundary checking in checkPlacement:
+100,1000,-1
+359.494

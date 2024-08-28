@@ -1,7 +1,6 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
 
-//#include <cassert>
 #include <array>
 #include <iostream>
 #include <chrono>
@@ -20,11 +19,8 @@ using Board = std::array<char, 10 * 10>;
 using Location = std::pair<int, int>;
 using Solution = std::vector<std::pair<Location, int>>; //pair<Location, orientation index>, can reconstruct a game state using this and a Board
 
-
-
 namespace dsply {
 
-    //displayPiece() requires that Stage0 has already been completed (it needs the orientations to be sorted)
     void displayPiece(const pcs::Piece* piece, int orientation_idx = 0);
 
     void displayPieceList(const std::vector<std::string>& pieceList, bool allDetails = false);

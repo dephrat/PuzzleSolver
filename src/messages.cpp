@@ -2,18 +2,19 @@
 
 namespace msgs {
     
-    const std::string incorrectNumberPieceOrientationsErrorMessage = "ERROR: Sorry, looks like one of the pieces was defined with more or less than one orientation. Check the documentation for more information on how to resolve this error.";
-    const std::string incorrectPieceNameErrorMessage = "ERROR: Sorry, some of the internal piece_names keys don't match their mapped piece's name. Check the documentation for more information on how to resolve this error.";
+    const std::string incorrectNumberPieceOrientationsErrorMessage = "ERROR: Sorry, looks like one of the pieces was defined with more or less than one orientation.";
+    const std::string incorrectPieceNameErrorMessage = "ERROR: Sorry, some of the internal piece_names keys don't match their mapped piece's name.";
     const std::string invalidIntegerInputBatchSizeErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputNumSolutionsErrorMessage = "ERROR: Sorry, please enter either -1 or a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputNumThreadsErrorMessage = "ERROR: Sorry, please enter a valid non-negative integer less than 2147483648.";
     const std::string invalidIntegerInputSolutionsIndexErrorMessage = "ERROR: Sorry, please enter a valid integer within the specified range (inclusive).";
     const std::string invalidStringInputErrorMessage = "ERROR: Sorry, looks like that input failed completely. Please try again.";
-    const std::string illegalEmptyPieceSymbolErrorMessage = "ERROR: Sorry, the space char (' ') cannot be used as a piece symbol because it represents an empty square in the board. Check the documentation for more information on how to resolve this error.";
-    const std::string nullPieceErrorMessage = "ERROR: Sorry, looks like piece_names maps a string to a nullptr. Check the documentation for more information on how to resolve this error.";
-    const std::string outOfBoundsOrientationIndexDisplayPieceErrorMessage = "ERROR: Sorry, looks like someone tried to call displayPiece with an illegal orientation index. Check the documentation for more information on how to resolve this error.";
-    const std::string repeatedPieceSymbolErrorMessage = "ERROR: Sorry, some of the piece symbols were used for multiple pieces. Please ensure each piece uses a unique symbol. Check the documentation for more information on how to resolve this error.";
+    const std::string illegalEmptyPieceSymbolErrorMessage = "ERROR: Sorry, the space char (' ') cannot be used as a piece symbol because it represents an empty square in the board.";
+    const std::string nullPieceErrorMessage = "ERROR: Sorry, looks like piece_names maps a string to a nullptr.";
+    const std::string outOfBoundsOrientationIndexDisplayPieceErrorMessage = "ERROR: Sorry, looks like someone tried to call displayPiece with an illegal orientation index.";
+    const std::string pieceMissingZeroZeroErrorMessage = "ERROR: Sorry, looks like one of the pieces was missing the {0,0} coordinate.";
+    const std::string repeatedPieceSymbolErrorMessage = "ERROR: Sorry, some of the piece symbols were used for multiple pieces. Please ensure each piece uses a unique symbol.";
     const std::string stage1IntroMessage = "Stage 1: Use commands to put together a list of pieces. The solver will attempt to place these pieces into the grid. Enter 'help' for a list of accepted commands.";
     const std::string stage3IntroMessage = "Stage 3: Use commands to view the results. Enter 'help' for a list of accepted commands.";
     
@@ -39,7 +40,6 @@ namespace msgs {
         +std::string("   numthreadsolutions: outputs the number of solutions found.\n")
         +std::string("   piecelist: displays the piece list, which the solver attempted to place in the puzzle grid,\n")
         +std::string("      then asks if you'd like to display each piece's info.\n");
-        
     
     std::string unrecognizedCommandErrorMessage(const std::string& command) {
         return "ERROR: Sorry, " + command + " is not a recognized command."
@@ -50,5 +50,4 @@ namespace msgs {
         + " Enter 'view pieces' for a list of valid piece names,"
         + " or refer to the documentation to see how to add new pieces.";
     }
-    
 }

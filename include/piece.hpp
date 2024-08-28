@@ -15,7 +15,7 @@ namespace pcs {
     };
 
     struct Orientation {
-        std::vector<std::pair<int, int> > coordinates; //grid data. must always include {0,0}
+        std::vector<std::pair<int, int>> coordinates; //grid data. must always include {0,0}
         BB boundingBox;
 
         Orientation(const std::vector<std::pair<int, int> >& c, const BB& bb) : coordinates(c), boundingBox(bb) {}
@@ -29,8 +29,6 @@ namespace pcs {
         Piece(const std::string n, const char s, const std::vector<Orientation>& o) : name(n), symbol(s), 
             orientations(o) {}
     };
-
-    //i forget, can I put Orientation struct definition after Piece definition if I have a forward declaration?
 
     extern const std::unordered_map<std::string, Piece*> piece_names;
     extern const BB genericBB;

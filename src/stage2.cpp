@@ -1,4 +1,5 @@
-#include "../include/stages.hpp"
+#include "../include/messages.hpp"
+#include "../include/stage2.hpp"
 
 void shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
     int nT;

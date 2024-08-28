@@ -16,11 +16,13 @@ namespace msgs {
     extern const std::string invalidStringInputErrorMessage;
     extern const std::string nullPieceErrorMessage;
     extern const std::string outOfBoundsOrientationIndexDisplayPieceErrorMessage;
+    extern const std::string pieceMissingZeroZeroErrorMessage;
     extern const std::string repeatedPieceSymbolErrorMessage;
     extern const std::string stage1CommandsMessage;
     extern const std::string stage1IntroMessage;
     extern const std::string stage3CommandsMessage;
     extern const std::string stage3IntroMessage;
+    
 
     extern std::string unrecognizedCommandErrorMessage(const std::string& command);
     extern std::string unrecognizedPieceErrorMessage(const std::string& pieceName);

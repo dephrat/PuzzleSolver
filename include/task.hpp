@@ -7,8 +7,7 @@
 
 using Board = std::array<char, 10 * 10>;
 using Location = std::pair<int, int>;
-using Solution = std::vector<std::pair<Location, int>>; //pair<Location, orientation index>
-
+using Solution = std::vector<std::pair<Location, int>>;
 
 struct Task {
     Board board;
