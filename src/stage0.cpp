@@ -86,10 +86,6 @@ inline void sortOrientations(pcs::Piece* piece) {
     }
 }
 
-inline std::string pairToString(std::pair<int, int>& p) {
-    return std::to_string(p.first) + std::to_string(p.second);
-}
-
 struct VectorPairHash {
     std::size_t operator()(const std::vector<Location>& vec) const {
         std::size_t seed = vec.size();
