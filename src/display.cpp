@@ -44,7 +44,7 @@ namespace dsply {
                 //invariant: colTracker is where we expect to place the next char in the current row if it's as far left as possible, given the previously placed pieces in this row (starting from firstCol)
                 int colTracker = firstCol;
                 //j starts at 1 because the first element in the vector is reserved for the spatial row
-                for (int j = 1; j < displayStructure[i].size(); colTracker = displayStructure[i][j] + 1, j++) {
+                for (size_t j = 1; j < displayStructure[i].size(); colTracker = displayStructure[i][j] + 1, j++) {
                     std::cout << std::string(displayStructure[i][j] - colTracker, ' ') + piece->symbol;
                 }
                 std::cout << "\n";
