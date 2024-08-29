@@ -88,7 +88,7 @@ namespace dsply {
     }
 
     void displaySolution(const Solution& solution, const std::vector<std::string>& pieceList) {
-        for (int i = 0; i < pieceList.size(); ++i) {
+        for (size_t i = 0; i < pieceList.size(); ++i) {
             const auto& solutionElement = solution[i];
             //Piece #(i+1): red(r) placed at (x,y) in orientation z
             std::cout << "Piece #" << std::to_string(i+1) << ": " << pieceList[i] << "(" << pcs::piece_names.at(pieceList[i])->symbol << ")";
