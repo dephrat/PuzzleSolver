@@ -1,7 +1,7 @@
 ## Puzzle Solver
 
 ### Overview
-This project was created to find solutions to a puzzle, in which 9 pieces have to be placed into a 10x10 grid. I implemented both single- and multi-threaded solving with a thread pool, as well as some barebones benchmarking to compare them.
+This project was created to find solutions to a puzzle, in which 9 pieces have to be placed into a 10x10 grid. I implemented both single- and multi-threaded solving with a thread pool, as well as some barebones benchmarking to compare the two approaches.
 
 ### Build & Run:
 - `cd` into the repo
