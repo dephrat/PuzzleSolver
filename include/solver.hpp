@@ -47,7 +47,7 @@ namespace slvr {
         static void removePiece(const pcs::Piece* piece, int orientation_idx, const Location& location, Task* task);
 
         //single-threaded
-        void solve(const int pc_idx = 0);
+        void solve(const size_t pc_idx = 0);
 
         //multi-threaded methods
         void thread_solve();

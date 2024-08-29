@@ -79,7 +79,7 @@ namespace slvr {
         prepLocations();
     }
 
-    void Solver::solve(const int pc_idx) {
+    void Solver::solve(const size_t pc_idx) {
         const pcs::Piece* piece = pcs::piece_names.at(pieceList[pc_idx]);
         for (const Location& location : locations) {
             std::vector<int> result = checkPlacement(piece, location, &(task.board));
