@@ -1,4 +1,4 @@
-# This is a multithreaded puzzle solver in which I implement thread pools to improve the speed.
+# Puzzle Solver
 
 ## Overview
 This project was created to find solutions to a puzzle, in which 9 pieces have to be placed into a 10x10 grid. I implemented both single- and multi-threaded solving with a thread pool, as well as some barebones benchmarking to compare them.
