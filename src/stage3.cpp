@@ -5,16 +5,6 @@
 #include "../include/solutions.hpp"
 #include "../include/stage3.hpp"
 
-/*
-options:
-View 1st solution - solution 0 || s 0
-View solution by index - solution <idx> || s <idx>
-View number of solutions - numsolutions || ns
-View all solutions - all
-- show number of solutions, ask to confirm, maybe if the number is large (>100) or will take a while
-View piecelist
-option to view as board vs as piece placements?
-*/
 void shellDisplayResults(const slvr::Solver& solver) {
     std::cout << msgs::stage3IntroMessage << std::endl;
 
@@ -31,8 +21,6 @@ void shellDisplayResults(const slvr::Solver& solver) {
     const std::vector<Solution>& thread_solutionsVector = thread_solutions.getSolutions();
     std::vector<Board> thread_boardsVector(thread_numSolutions);
     std::vector<int> thread_boardsPopulatedVector(thread_numSolutions, 0);
-
-
 
     if (numSolutions == 0 && thread_numSolutions == 0) {
         std::cout << "Looks like there were no solutions found. Exiting program by default." << std::endl;

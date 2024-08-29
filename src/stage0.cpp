@@ -49,12 +49,13 @@ bool piecesValidation() {
 }
 
 inline void rotate(std::vector<std::pair<int, int>>& coordinates) {
-    for (auto& [x, y] : coordinates) {
-        y -= x;
-        x += y;
-        y -= x;
+    for (auto& [row, col] : coordinates) {
+        col -= row;
+        row += col;
+        col -= row;
     }
 }
+
 void generateOrientationCoords(pcs::Piece* piece) {
     std::vector<std::pair<int, int>> coordinates = piece->orientations[0].coordinates;
     //rotate once
@@ -65,7 +66,7 @@ void generateOrientationCoords(pcs::Piece* piece) {
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
-    //flip the piece: col stays the same, row becomes negative of itself
+    //flip the piece over the x-axis
     for (auto& [row, col] : coordinates) row = -row;
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
@@ -97,15 +98,8 @@ struct VectorPairHash {
     }
 };
 
-// Equality function for std::vector<Location>
-struct VectorPairEqual {
-    bool operator()(const std::vector<Location>& lhs, const std::vector<Location>& rhs) const {
-        return lhs == rhs;
-    }
-};
-
 inline void trimOrientations(pcs::Piece* piece) {
-    //use special unordered_set to check for duplicates, store indices of duplicates in duplicate_indices
+    //look for duplicates, store indices in duplicate_indices for deletion
     std::unordered_set<std::vector<Location>, VectorPairHash> orientations_set;
     std::vector<int> duplicate_indices;
     for (int i = 0; i < piece->orientations.size(); ++i) {
