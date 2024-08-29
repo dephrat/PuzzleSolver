@@ -12,7 +12,7 @@ namespace dsply {
             for (size_t i = 0; i < piece->orientations.size(); ++i) {
                 displayPiece(piece, i);
             }
-        } else if (orientation_idx < -1 || orientation_idx >= piece->orientations.size()) {
+        } else if (orientation_idx < -1 || orientation_idx >= (int)piece->orientations.size()) {
             std::cerr << msgs::outOfBoundsOrientationIndexDisplayPieceErrorMessage << std::endl;
             return;
         } else {
@@ -40,11 +40,11 @@ namespace dsply {
             displayStructure.push_back(currentVec);
 
             //Display
-            for (int i = 0; i < displayStructure.size(); ++i) {
+            for (size_t i = 0; i < displayStructure.size(); ++i) {
                 //invariant: colTracker is where we expect to place the next char in the current row if it's as far left as possible, given the previously placed pieces in this row (starting from firstCol)
                 int colTracker = firstCol;
                 //j starts at 1 because the first element in the vector is reserved for the spatial row
-                for (int j = 1; j < displayStructure[i].size(); colTracker = displayStructure[i][j] + 1, j++) {
+                for (size_t j = 1; j < displayStructure[i].size(); colTracker = displayStructure[i][j] + 1, j++) {
                     std::cout << std::string(displayStructure[i][j] - colTracker, ' ') + piece->symbol;
                 }
                 std::cout << "\n";
@@ -88,7 +88,7 @@ namespace dsply {
     }
 
     void displaySolution(const Solution& solution, const std::vector<std::string>& pieceList) {
-        for (int i = 0; i < pieceList.size(); ++i) {
+        for (size_t i = 0; i < pieceList.size(); ++i) {
             const auto& solutionElement = solution[i];
             //Piece #(i+1): red(r) placed at (x,y) in orientation z
             std::cout << "Piece #" << std::to_string(i+1) << ": " << pieceList[i] << "(" << pcs::piece_names.at(pieceList[i])->symbol << ")";

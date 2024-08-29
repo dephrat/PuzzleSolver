@@ -26,7 +26,7 @@ namespace slvr {
     std::vector<int> Solver::checkPlacement(const pcs::Piece* piece, const Location& location, const Board* board) {
         //return true for the orientations that would fit at current Location
         std::vector<int> ret;
-        for (int i = 0; i < piece->orientations.size(); i++) {
+        for (size_t i = 0; i < piece->orientations.size(); i++) {
             const pcs::Orientation& orientation = piece->orientations[i];
             if (!inBounds(location, orientation.boundingBox)) continue;
             bool placeable = true;
@@ -79,13 +79,13 @@ namespace slvr {
         prepLocations();
     }
 
-    void Solver::solve(const int pc_idx) {
+    void Solver::solve(const size_t pc_idx) {
         const pcs::Piece* piece = pcs::piece_names.at(pieceList[pc_idx]);
         for (const Location& location : locations) {
             std::vector<int> result = checkPlacement(piece, location, &(task.board));
             for (int i : result) {
                 placePiece(piece, i, location, &task);
-                if (pc_idx < pieceList.size() - 1)
+                if (pc_idx < -1 + pieceList.size())
                     solve(pc_idx + 1);
                 else
                     solutions.addSolution(task.current_state);

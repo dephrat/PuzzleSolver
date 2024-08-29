@@ -102,7 +102,7 @@ inline void trimOrientations(pcs::Piece* piece) {
     //look for duplicates, store indices in duplicate_indices for deletion
     std::unordered_set<std::vector<Location>, VectorPairHash> orientations_set;
     std::vector<int> duplicate_indices;
-    for (int i = 0; i < piece->orientations.size(); ++i) {
+    for (size_t i = 0; i < piece->orientations.size(); ++i) {
         auto& coords = piece->orientations[i].coordinates;
         if (!orientations_set.insert(coords).second) {
             duplicate_indices.push_back(i);
