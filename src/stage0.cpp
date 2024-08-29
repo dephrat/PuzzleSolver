@@ -97,13 +97,6 @@ struct VectorPairHash {
     }
 };
 
-// Equality function for std::vector<Location>
-struct VectorPairEqual {
-    bool operator()(const std::vector<Location>& lhs, const std::vector<Location>& rhs) const {
-        return lhs == rhs;
-    }
-};
-
 inline void trimOrientations(pcs::Piece* piece) {
     //use special unordered_set to check for duplicates, store indices of duplicates in duplicate_indices
     std::unordered_set<std::vector<Location>, VectorPairHash> orientations_set;
