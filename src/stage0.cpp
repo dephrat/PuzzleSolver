@@ -49,10 +49,10 @@ bool piecesValidation() {
 }
 
 inline void rotate(std::vector<std::pair<int, int>>& coordinates) {
-    for (auto& [x, y] : coordinates) {
-        y -= x;
-        x += y;
-        y -= x;
+    for (auto& [row, col] : coordinates) {
+        col -= row;
+        row += col;
+        col -= row;
     }
 }
 void generateOrientationCoords(pcs::Piece* piece) {
@@ -65,7 +65,7 @@ void generateOrientationCoords(pcs::Piece* piece) {
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
-    //flip the piece: col stays the same, row becomes negative of itself
+    //flip the piece over the x-axis
     for (auto& [row, col] : coordinates) row = -row;
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
