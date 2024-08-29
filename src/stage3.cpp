@@ -89,10 +89,6 @@ void shellDisplayResults(const slvr::Solver& solver) {
                         thread_boardsPopulatedVector[solutionIndex] = 1;
                     }
                     dsply::displayBoard(&(thread_boardsVector[solutionIndex]));
-                }
-                
-                else if (input == "all" || input == "a") {
-
                 } else if (input == "numsolutions" || input == "ns") {
                     std::cout << "Solutions: " << std::to_string(numSolutions) << "\n";
                 } else if (input == "numthreadsolutions" || input == "nts") {
@@ -109,29 +105,6 @@ void shellDisplayResults(const slvr::Solver& solver) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cerr << msgs::invalidStringInputErrorMessage << std::endl;
-            //std::cout << "Sorry, looks like that command failed completely. Please enter a valid command." << std::endl;
         }
     }
 }
-
-/*
-void acceptUserInputAndDisplayCorrespondingInformation(somehow get access to the Solutions) {
-    std::cout << msgs::stage3IntroMessage << std::endl;
-    while (true) {
-        get user input
-        if input is show 1st solution:
-            show first solution
-
-
-    }
-
-    //shell to get user input for display
-
-    //use display class accordingly
-
-    
-    
-
-
-    
-//}*/

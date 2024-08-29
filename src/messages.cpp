@@ -35,7 +35,6 @@ namespace msgs {
         +std::string("view: prompts for one of the following follow-ups.\n")
         +std::string("   solution: prompts for index, then shows the solution at that index.\n")
         +std::string("   threadsolution: prompts for index, then shows the multithreading-generated solution at that index.\n")
-        +std::string("   all: prompts for confirmation, then shows all solutions.\n")
         +std::string("   numsolutions: outputs the number of solutions found.\n")
         +std::string("   numthreadsolutions: outputs the number of solutions found.\n")
         +std::string("   piecelist: displays the piece list, which the solver attempted to place in the puzzle grid,\n")
