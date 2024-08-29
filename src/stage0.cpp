@@ -1,14 +1,14 @@
-#include "../include/stages.hpp"
+#include <iostream>
+#include <unordered_set>
+#include <utility>
 
-//THIS FILE SPECIFICALLY SHOULD NOT HAVE ACCESS TO THE DISPLAY CLASS BECAUSE DISPLAY RELIES ON VALIDATION AND ORIENTATIONS
+#include "../include/messages.hpp"
+#include "../include/piece.hpp"
+#include "../include/stage0.hpp"
+
+using Location = std::pair<int, int>;
 
 bool piecesValidation() {
-    //check:
-    //all pieces have exactly one orientation (for now)
-    //each piece name in piece_names matches the name of the piece it maps to
-    //each piece has a symbol other than ' ' (the empty char)
-    //each piece's symbol is unique
-    //UNCHECKED each piece contains a cross centered at 0,0 (how do I even do this with a vector?)
     std::unordered_set<char> symbols;
     for (const std::pair<std::string, pcs::Piece*>& p : pcs::piece_names) {
         //Check that the piece has exactly one orientations
@@ -27,6 +27,18 @@ bool piecesValidation() {
             return false;
         }
         symbols.insert(p.second->symbol);
+        //Check that the piece contains {0,0}
+        bool hasZeroZero = false;
+        for (const auto& coordinate : p.second->orientations[0].coordinates) {
+            if (coordinate.first == 0 && coordinate.second == 0) {
+                hasZeroZero = true;
+                break;
+            }
+        }
+        if (hasZeroZero == false) {
+            std::cerr << msgs::pieceMissingZeroZeroErrorMessage << std::endl;
+            return false;
+        }
     }
     //Check that this piece's symbol is unique
     if (symbols.size() != pcs::piece_names.size()) {
@@ -36,8 +48,7 @@ bool piecesValidation() {
     return true;
 }
 
-
-void rotate(std::vector<std::pair<int, int>>& coordinates) {
+inline void rotate(std::vector<std::pair<int, int>>& coordinates) {
     for (auto& [x, y] : coordinates) {
         y -= x;
         x += y;
@@ -45,7 +56,7 @@ void rotate(std::vector<std::pair<int, int>>& coordinates) {
     }
 }
 void generateOrientationCoords(pcs::Piece* piece) {
-    std::vector<std::pair<int, int>> coordinates = piece->orientations[0].coordinates; //Don't make this a reference! We leave orientations[0].coordinates untouched! (Until sortOrientations)
+    std::vector<std::pair<int, int>> coordinates = piece->orientations[0].coordinates;
     //rotate once
     rotate(coordinates);
     //create Orientation and add to piece.orientations
@@ -54,8 +65,8 @@ void generateOrientationCoords(pcs::Piece* piece) {
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
-    //flip the piece: y stays the same, x becomes negative of itself
-    for (auto& [x, y] : coordinates) x = -x;
+    //flip the piece: col stays the same, row becomes negative of itself
+    for (auto& [row, col] : coordinates) row = -row;
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
@@ -63,10 +74,9 @@ void generateOrientationCoords(pcs::Piece* piece) {
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
     rotate(coordinates);
     piece->orientations.emplace_back(coordinates, pcs::genericBB);
-    
 }
 
-void sortOrientations(pcs::Piece* piece) {
+inline void sortOrientations(pcs::Piece* piece) {
     for (auto& orientation : piece->orientations) {
         auto& coordinates = orientation.coordinates;
         std::sort(coordinates.begin(), coordinates.end(), [](const std::pair<int, int>& a, const std::pair<int, int>& b) {
@@ -98,8 +108,7 @@ struct VectorPairEqual {
     }
 };
 
-//maybe theoretically possible for two orientations with different coordinates but the same shape? I haven't analyzed that
-void trimOrientations(pcs::Piece* piece) {
+inline void trimOrientations(pcs::Piece* piece) {
     //use special unordered_set to check for duplicates, store indices of duplicates in duplicate_indices
     std::unordered_set<std::vector<Location>, VectorPairHash> orientations_set;
     std::vector<int> duplicate_indices;
@@ -119,23 +128,22 @@ void createBoundingBoxes(pcs::Piece* piece) {
     for (pcs::Orientation& orientation : piece->orientations) {
         int l = 0, u = 0, r = 0, d = 0;
         for (const auto& coordinate : orientation.coordinates) {
-            int x = coordinate.first;
-            int y = coordinate.second;
-            l = std::min(l, x);
-            r = std::max(r, x);
-            u = std::min(u, y);
-            d = std::max(d, y);
+            int row = coordinate.first;
+            int col = coordinate.second;
+            l = std::min(l, col);
+            r = std::max(r, col);
+            u = std::min(u, row);
+            d = std::max(d, row);
         }
         orientation.boundingBox = pcs::BB(l, r, u, d);
     }
 }
 
 //generates orientations, sorts orientation coordinates internally, and removes duplicate orientations. 
-//STILL UNTESTED
 void generatePieceOrientations() {
     for (auto& [name, piece] : pcs::piece_names) {
         generateOrientationCoords(piece);
-        sortOrientations(piece); //internal sorting, makes trimOrientations easier
+        sortOrientations(piece);
         trimOrientations(piece);
         createBoundingBoxes(piece);
     }

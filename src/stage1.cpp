@@ -1,4 +1,9 @@
-#include "../include/stages.hpp"
+#include <iostream>
+
+#include "../include/display.hpp"
+#include "../include/messages.hpp"
+#include "../include/piece.hpp"
+#include "../include/stage1.hpp"
 
 bool isValidPieceName(const std::string& name) {
     return pcs::piece_names.find(name) != pcs::piece_names.end();

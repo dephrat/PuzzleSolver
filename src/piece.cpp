@@ -4,7 +4,7 @@ namespace pcs {
 
     const BB genericBB = BB(0,0,0,0);
 
-    //Define each piece with a single starting orientation. I'll give it more orientations later, don't worry
+    //Define each piece with a single starting orientation. Make sure to include {0,0}.
     std::vector<std::pair<int, int>> red_coords = {
               {-2,-1},{-2,0},
                       {-1,0},

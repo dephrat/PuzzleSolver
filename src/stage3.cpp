@@ -1,8 +1,9 @@
-#include "../include/stages.hpp"
+#include <iostream>
 
+#include "../include/display.hpp"
 #include "../include/messages.hpp"
 #include "../include/solutions.hpp"
-#include <iostream>
+#include "../include/stage3.hpp"
 
 /*
 options:

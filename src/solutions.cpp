@@ -3,7 +3,6 @@
 
 #include "../include/piece.hpp"
 
-
 Board Solutions::constructBoardFromSolution(const Solution& solution, const std::vector<std::string>& pieceList) const {
     Board board;
     for (int row = 0; row < 10; ++row) {

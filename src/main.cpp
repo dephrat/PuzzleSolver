@@ -1,87 +1,38 @@
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../include/solutions.hpp"
-#include "../include/stages.hpp"
 
-#include <fstream>
+#include "../include/solutions.hpp"
+#include "../include/stage0.hpp"
+#include "../include/stage1.hpp"
+#include "../include/stage2.hpp"
+#include "../include/stage3.hpp"
 
 int main() {
-    /*
-    int numIterations;
-    std::cout << "numiterations: ";
-    std::cin >> numIterations;
-    std::string fileName;
-    std::cout << "file name: ";
-    std::cin >> fileName;
-    //open file 
-    std::ifstream inputFile(fileName);
-    if (!inputFile) {
-        std::cerr << "Couldn't open input file" << std::endl;
-        return 1;
-    }
-    */
-
     //Stage 0: Initial condition checking
     stage0();
 
-    
-    
+    //Stage 1: Generate piece list
+    std::vector<std::string> pieceList = shellCreatePieceList();
+    sortPieceList(pieceList);
 
-    //direct cin to read from the file
-    //std::cin.rdbuf(inputFile.rdbuf());
+    //Stage 2: Run solver
+    int numThreads, batchSize, maxSolutions;
+    shellPrepSolver(numThreads, batchSize, maxSolutions);
+    Solutions solutions(maxSolutions), thread_solutions(maxSolutions);
+    slvr::Solver solver(pieceList, solutions, thread_solutions, numThreads, batchSize);
 
-    //double averageTime = 0;
-    //std::vector<double> solveTimes;
+    //Benchmark solve time:
+    using Time = std::chrono::steady_clock;
+    std::chrono::duration<double, std::milli> fp_ms;
+    const auto start = Time::now();
+    runSolver(solver);
+    const auto end = Time::now();
+    fp_ms = end - start;
+    auto solveTime = fp_ms.count() / 1000;
+    std::cout << "Solving finished. Time taken (s): " << solveTime << std::endl;
 
-
-    
-    //for (int i = 0; i < numIterations; ++i) {
-    //    std::cout << "Starting benchmark iteration " << std::to_string(i) << std::endl;
-        //Stage 1: Create/edit piece list
-        std::vector<std::string> pieceList = shellCreatePieceList();
-        sortPieceList(pieceList);
-
-        //Stage 2: Run solver
-        int numThreads, batchSize, maxSolutions;
-        shellPrepSolver(numThreads, batchSize, maxSolutions);
-        Solutions solutions(maxSolutions), thread_solutions(maxSolutions);
-        slvr::Solver solver(pieceList, solutions, thread_solutions, numThreads, batchSize);
-
-        //Benchmark solve time:
-        using Time = std::chrono::steady_clock;
-        std::chrono::duration<double, std::milli> fp_ms;
-        const auto start = Time::now();
-        runSolver(solver);
-        const auto end = Time::now();
-        fp_ms = end - start;
-        auto solveTime = fp_ms.count() / 1000;
-        std::cout << "Solving finished. Time taken (s): " << solveTime << std::endl;
-    //    averageTime += solveTime;
-    //    solveTimes.push_back(solveTime);
-
-
-        //Stage 3: View results
-        shellDisplayResults(solver);    
-
-
-
-    //    inputFile.clear();
-        //reset file pointer
-    //    inputFile.seekg(0, std::ios::beg);
-    //}
-
-    //averageTime /= numIterations;
-    //double variance = 0;
-    //for (auto x : solveTimes) {
-    //    variance += (x-averageTime) * (x-averageTime);
-    //}
-    //variance /= numIterations;
-    //std::cout << "Average time: " << std::to_string(averageTime) << std::endl;
-    //std::cout << "Variance: " << std::to_string(variance) << std::endl;
+    //Stage 3: View results
+    shellDisplayResults(solver);    
 }
-
-//single threaded: 4.3, var 3.something (100 iterations)
-//multithreaded with broadcast: 3.484103, var 0.457572 (25 iterations)
-//multithreaded with signal: 4.467058, var 1.754681 (25 iterations)
-//multithreaded with broadcast: 2.982 var 0.068610 (10 iterations)

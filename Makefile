@@ -5,7 +5,7 @@ STAGE_NUMS = 0 1 2 3
 STAGE_NAMES = $(STAGE_NUMS:%=stage%)
 
 SRC_FILENAMES = display main messages piece solver solutions $(STAGE_NAMES)
-INC_FILENAMES = display messages piece solutions solver stages task
+INC_FILENAMES = display messages piece solutions solver task $(STAGE_NAMES)
 
 SOURCES = $(SRC_FILENAMES:%=src/%.cpp)
 OBJECTS = $(SRC_FILENAMES:%=build/%.o)
