@@ -79,9 +79,7 @@ namespace slvr {
         prepLocations();
     }
 
-    //Single-threaded approach:
-
-    void Solver::solve(const int pc_idx) { //default value already given in header file, are we allowed it here, and will it give an error?
+    void Solver::solve(const int pc_idx) {
         const pcs::Piece* piece = pcs::piece_names.at(pieceList[pc_idx]);
         for (const Location& location : locations) {
             std::vector<int> result = checkPlacement(piece, location, &(task.board));
