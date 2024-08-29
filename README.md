@@ -9,7 +9,7 @@ This project was created to find solutions to a puzzle, in which 9 pieces have t
 - `./puzzleSolver`
 - Answer the command-line prompts. The general flow is `create [num_pieces] [piece colours] continue Y [numthreads] [batch_size] [num_solutions]`, and you can use `help` to see other commands
 
-### Features: List of key features
-- Create list of pieces to be placed in the board
-- Solver which allows single- and multi-threaded solving
-- Display solutions after solving is completed
+### Features:
+- Shell to create custom piece list!
+- Solver with multi-threaded capabilities, implemented using a thread pool!
+- Post-solver shell to view solutions!
