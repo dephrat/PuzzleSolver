@@ -55,6 +55,7 @@ inline void rotate(std::vector<std::pair<int, int>>& coordinates) {
         col -= row;
     }
 }
+
 void generateOrientationCoords(pcs::Piece* piece) {
     std::vector<std::pair<int, int>> coordinates = piece->orientations[0].coordinates;
     //rotate once
@@ -98,7 +99,7 @@ struct VectorPairHash {
 };
 
 inline void trimOrientations(pcs::Piece* piece) {
-    //use special unordered_set to check for duplicates, store indices of duplicates in duplicate_indices
+    //look for duplicates, store indices in duplicate_indices for deletion
     std::unordered_set<std::vector<Location>, VectorPairHash> orientations_set;
     std::vector<int> duplicate_indices;
     for (int i = 0; i < piece->orientations.size(); ++i) {

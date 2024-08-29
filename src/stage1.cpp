@@ -9,7 +9,6 @@ bool isValidPieceName(const std::string& name) {
     return pcs::piece_names.find(name) != pcs::piece_names.end();
 }
 
-//std::vector<std::string> providePromptsToReceiveUserInputToCreateIncludedPiecesList() { commented for posterity's sake, what a monstrous name
 std::vector<std::string> shellCreatePieceList() {
     std::cout << msgs::stage1IntroMessage << std::endl;
     std::vector<std::string> pieceList;
@@ -102,7 +101,6 @@ std::vector<std::string> shellCreatePieceList() {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cerr << msgs::invalidStringInputErrorMessage << std::endl;
-            //std::cout << "Sorry, looks like that command failed completely. Please enter a valid command." << std::endl;
         }
     }
 }
