@@ -76,6 +76,7 @@ std::vector<std::string> shellCreatePieceList() {
                 }
             } else if (input == "createoriginal" || input == "cro") {
                 pieceList = {"red", "blue", "orange", "green", "yellow", "cyan", "lime", "pink", "purple"};
+                std::cout << "Using the original piece list\n";
             } else if (input == "continue" || input == "co") {
                 std::cout << "Confirm the following piece list:\n";
                 for (std::string s : pieceList) {
