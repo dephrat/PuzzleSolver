@@ -2,7 +2,8 @@
 
 ### Overview
 This is a puzzle solver!  
-The project was created to find solutions to a puzzle: Place 9 pieces into a 10x10 grid. I implemented both single- and multi-threaded solving with a thread pool, as well as some barebones benchmarking to compare the two approaches.
+The project was created to find solutions to a puzzle: Place 9 pieces into a 10x10 grid. I came up with single- and multi-threaded approaches, and you can use both to see which one runs faster.
+The single-threaded approach used recursive backtracking, while the multi-threaded approach split the challenge into various Tasks and distributed them to a thread pool.
 
 ### Build & Run:
 - `cd` into the repo
@@ -13,4 +14,9 @@ The project was created to find solutions to a puzzle: Place 9 pieces into a 10x
 ### Features:
 - Shell to create custom piece list!
 - Solver with multi-threaded capabilities, implemented using a thread pool!
+- Benchmarking!
 - Post-solver shell to view solutions!
+
+### Notes:
+- I found 100 threads and a batch size of 1000 to be pretty consistently fast
+- use `createoriginal` or `cro` in stage 1 to automatically set the piece list to that of the original puzzle
