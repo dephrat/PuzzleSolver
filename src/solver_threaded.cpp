@@ -57,7 +57,7 @@ namespace slvr {
             //Consumer: get task
             pthread_mutex_lock(&(self->queueLock));
 
-            /* Logic here:
+            /* Logic for waiting/exiting/continuing:
             s = need more solutions
             t = tasks available
             a = there are active threads
@@ -66,7 +66,7 @@ namespace slvr {
             001 finish ``
             010 finish ``
             011 finish ``
-            100 finish (no more work can be done)
+            100 finish (no more work can be done, there are no active threads to generate more tasks)
             101 go to sleep (wait for tasks from the active threads)
             110 continue (go get a task)
             111 continue ``
