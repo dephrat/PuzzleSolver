@@ -70,10 +70,10 @@ namespace slvr {
                 break;
             }
             */
-            while (self->thread_solutions.maxSolutionsReached() && self->taskQueue.size() == 0 && self->activeThreads > 0) {
+            while (self->thread_solutions.maxSolutionsReached() == false && self->taskQueue.size() == 0 && self->activeThreads > 0) {
                pthread_cond_wait(&(self->queueCond), &(self->queueLock));
             }
-            if (self->thread_solutions.maxSolutionsReached() == false) {//our work here is done, it's time to go home.
+            if (self->thread_solutions.maxSolutionsReached() == true) {//our work here is done, it's time to go home.
                 pthread_cond_broadcast(&(self->queueCond));
                 pthread_mutex_unlock(&(self->queueLock));
                 break;
@@ -88,7 +88,7 @@ namespace slvr {
             }
 
 
-            /*while ((self->taskQueue.size() == 0 && self->activeThreads > 0) || self->thread_solutions.maxSolutionsReached()) {
+            /*while (self->taskQueue.size() == 0 && self->activeThreads > 0) {
                 pthread_cond_wait(&(self->queueCond), &(self->queueLock));
             }*/
 /*
