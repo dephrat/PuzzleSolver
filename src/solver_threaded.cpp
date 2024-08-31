@@ -7,11 +7,17 @@
 namespace slvr {
 
     void Solver::execute(const Task& task, std::list<Task>& newTasks) {
-        const int pc_idx = task.current_state.size();
+        //Identify the index of the current piece to be added
+        const size_t pc_idx = task.current_state.size();
+
+        //Get that piece from the piece list
         const pcs::Piece* piece = pcs::piece_names.at(pieceList[pc_idx]);
+
+        //Check everywhere you could place it
         for (const Location& location : locations) {
             std::vector<int> result = checkPlacement(piece, location, &(task.board));
             for (int i : result) {
+                //Copy the Task to a new Task, update it, and add it to our return list
                 Task temp = task;
                 placePiece(piece, i, location, &temp); 
                 newTasks.push_back(std::move(temp));
@@ -21,11 +27,17 @@ namespace slvr {
     }
 
     void Solver::execute(const Task& task, std::vector<Solution>& newSolutions) {
-        const int pc_idx = task.current_state.size();
+        //Identify the index of the current piece to be added
+        const size_t pc_idx = task.current_state.size();
+
+        //Get that piece from the piece list
         const pcs::Piece* piece = pcs::piece_names.at(pieceList[pc_idx]);
+
+        //Check everywhere you could place it
         for (const Location& location : locations) {
             std::vector<int> result = checkPlacement(piece, location, &(task.board));
             for (int i : result) {
+                //We're trying to place the final piece, so we only need to update the Solution from the current Task
                 Solution solution = task.current_state;
                 solution.push_back(std::make_pair(location, i));
                 newSolutions.push_back(std::move(solution));
@@ -37,67 +49,50 @@ namespace slvr {
     void* Solver::startup(void* args) {
         Solver* self = static_cast<Solver*>(args);
         while (true) {
+            //Setup variables
             int numTasksToMove = 0;
             std::vector<Task> tasksToProcess;
             Task task;
-            //consumer: get task
-            pthread_mutex_lock(&(self->queueLock));
-            /*
-            need more solutions, there are tasks, there are active threads
-            000 exit
-            001 exit
-            010 exit 
-            011 exit 
-            100 exit
-            101 go back to sleep
-            110 go get em
-            111 go get em
 
-            while (need more tasks && no tasks && there are active threads) {
-                wait();
-            }
-            if (dont need more tasks) {
-                broadcast();
-                unlock;
-                break;
-            }
-            else if (need more tasks and there are some) {
-                go get them //do nothing
-            }
-            else if (need more tasks but there are none, and theres no active threads) {
-                broadcast();
-                unlock;
-                break;
-            }
+            //Consumer: get task
+            pthread_mutex_lock(&(self->queueLock));
+
+            /* Logic here:
+            s = need more solutions
+            t = tasks available
+            a = there are active threads
+            sta action
+            000 finish (no more work needs to be done)
+            001 finish ``
+            010 finish ``
+            011 finish ``
+            100 finish (no more work can be done)
+            101 go to sleep (wait for tasks from the active threads)
+            110 continue (go get a task)
+            111 continue ``
             */
+            
+            //We need tasks, there are none, but there are active threads.
+            //Therefore, wait for the active threads to deposit their tasks and/or solutions.
             while (self->thread_solutions.maxSolutionsReached() == false && self->taskQueue.size() == 0 && self->activeThreads > 0) {
                pthread_cond_wait(&(self->queueCond), &(self->queueLock));
             }
+
+            //Quit early if we've found enough solutions or if we're out of tasks and not going to get more.
+            //Note: I could make these if-else statements more concise, but I wanted to preserve the clarity of logic and make it easy to understand.
             if (self->thread_solutions.maxSolutionsReached() == true) {//our work here is done, it's time to go home.
                 pthread_cond_broadcast(&(self->queueCond));
                 pthread_mutex_unlock(&(self->queueLock));
                 break;
-            }
-            else if (self->taskQueue.size() > 0) {//we need solutions, and we have tasks! Go get em soldier!
+            } else if (self->taskQueue.size() > 0) {//we need solutions, and we have tasks! Go get em soldier!
                 //do nothing
-            }
-            else if (self->activeThreads == 0) { //no active threads means no more tasks. We need solutions, but we're not getting em.
+            } else if (self->activeThreads == 0) { //no active threads means no more tasks. We need solutions, but we're not getting em.
                 pthread_cond_broadcast(&(self->queueCond));
                 pthread_mutex_unlock(&(self->queueLock));
                 break;
             }
 
-
-            /*while (self->taskQueue.size() == 0 && self->activeThreads > 0) {
-                pthread_cond_wait(&(self->queueCond), &(self->queueLock));
-            }*/
-/*
-            if (self->taskQueue.size() == 0) { //done executing
-                pthread_cond_broadcast(&(self->queueCond)); //wake the sleeping threads
-                pthread_mutex_unlock(&(self->queueLock));
-                break;
-            }
-*/
+            //Take tasks from the queue
             if (self->useBatching) {
                 numTasksToMove = std::min(self->taskQueue.size(), self->batchSize);
                 for (int i = 0; i < numTasksToMove; ++i) {
@@ -110,66 +105,66 @@ namespace slvr {
             }
             self->activeThreads++; //this thread took a Task or batch of Tasks, so it's active!
             pthread_mutex_unlock(&(self->queueLock));
-            //executor: execute task
+
+            //Executor: execute task(s)
             std::vector<Solution> newSolutions;
             std::list<Task> newTasks;
             if (self->useBatching) {
                 for (int i = 0; i < numTasksToMove; ++i) {
-                    if (tasksToProcess[i].current_state.size() == self->pieceList.size() - 1) { //last piece
+                    
+                    if (tasksToProcess[i].current_state.size() == self->pieceList.size() - 1)
+                        //If we're placing the final piece, we're finding solutions
                         self->execute(tasksToProcess[i], newSolutions);
-                    } else {
+                    else
+                        //Otherwise, we're finding intermediate Tasks
                         self->execute(tasksToProcess[i], newTasks);
-                    }
                 }
             } else {
-                if (task.current_state.size() == self->pieceList.size() - 1) { //last piece
+                if (task.current_state.size() == self->pieceList.size() - 1)
+                    //If we're placing the final piece, we're finding solutions
                     self->execute(task, newSolutions);
-                } else {
+                else
+                    //Otherwise, we're finding intermediate Tasks
                     self->execute(task, newTasks);
-                }
             }
-            //producer: add tasks and solution
+
+            //Producer: add tasks and solution
             pthread_mutex_lock(&(self->queueLock));
-            //self->taskQueue.splice(self->taskQueue.end(), newTasks);
-            self->taskQueue.splice(self->taskQueue.begin(), newTasks);
+
+            //Add newly discovered tasks and solutions
+            self->taskQueue.splice(self->taskQueue.begin(), newTasks); //add to front to catch early solutions
             self->thread_solutions.addSolutions(newSolutions);
             self->activeThreads--; //thread is no longer going to add Tasks (until it picks up new ones) so it is no longer active!
+            
+            //Prepare to go back to being a consumer
             pthread_cond_broadcast(&(self->queueCond)); //wake up the other threads to take what they can  
-
-            /*bool timeToGo = self->thread_solutions.maxSolutionsReached();
-            pthread_mutex_unlock(&(self->queueLock));
-            if (timeToGo) {
-                break;
-            }*/
-/*
-            if we have enough solutions, we want each thread to leave.
-            there are these kinds of threads to deal with before we exit (they dont have the lock):
-                waiting for consumer lock
-                sleeping
-                waiting for post-wake-up lock 
-                waiting on producer lock 
-
-            idea: in consumer lock, dont bother getting a task, just wake up and leave. 
-                    //in producer lock, after placing tasks in, check numSolutions and then leave.
-                
-*/
-
             pthread_mutex_unlock(&(self->queueLock));
         }
         return NULL;
     }
 
     void Solver::thread_solve() {
+        //Prepare initial task
         taskQueue.emplace_back(task);
+
+        //Prepare thread synchronization variables
         pthread_mutex_init(&queueLock, NULL);
         pthread_cond_init(&queueCond, NULL);
+
+        //Create thread pool
         pthread_t threadPool[numThreads];
+
+        //Start thread execution
         for (int i = 0; i < numThreads; ++i) 
             if (pthread_create(&threadPool[i], NULL, startup, this) != 0) 
                 std::cerr << "Failed to create thread" << std::endl; 
+
+        //Collect thread execution
         for (int i = 0; i < numThreads; ++i) 
             if (pthread_join(threadPool[i], NULL) != 0) 
                 std::cerr << "Failed to join thread" << std::endl;   
+
+        //Clean up thread synchronization variables
         pthread_mutex_destroy(&queueLock);
         pthread_cond_destroy(&queueCond);
     }
