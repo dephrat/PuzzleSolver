@@ -42,14 +42,62 @@ namespace slvr {
             Task task;
             //consumer: get task
             pthread_mutex_lock(&(self->queueLock));
-            while (self->taskQueue.size() == 0 && self->activeThreads > 0) {
-                pthread_cond_wait(&(self->queueCond), &(self->queueLock));
+            /*
+            need more solutions, there are tasks, there are active threads
+            000 exit
+            001 exit
+            010 exit 
+            011 exit 
+            100 exit
+            101 go back to sleep
+            110 go get em
+            111 go get em
+
+            while (need more tasks && no tasks && there are active threads) {
+                wait();
             }
-            if (self->taskQueue.size() == 0) {
+            if (dont need more tasks) {
+                broadcast();
+                unlock;
+                break;
+            }
+            else if (need more tasks and there are some) {
+                go get them //do nothing
+            }
+            else if (need more tasks but there are none, and theres no active threads) {
+                broadcast();
+                unlock;
+                break;
+            }
+            */
+            while (self->thread_solutions.maxSolutionsReached() && self->taskQueue.size() == 0 && self->activeThreads > 0) {
+               pthread_cond_wait(&(self->queueCond), &(self->queueLock));
+            }
+            if (self->thread_solutions.maxSolutionsReached() == false) {//our work here is done, it's time to go home.
+                pthread_cond_broadcast(&(self->queueCond));
+                pthread_mutex_unlock(&(self->queueLock));
+                break;
+            }
+            else if (self->taskQueue.size() > 0) {//we need solutions, and we have tasks! Go get em soldier!
+                //do nothing
+            }
+            else if (self->activeThreads == 0) { //no active threads means no more tasks. We need solutions, but we're not getting em.
+                pthread_cond_broadcast(&(self->queueCond));
+                pthread_mutex_unlock(&(self->queueLock));
+                break;
+            }
+
+
+            /*while ((self->taskQueue.size() == 0 && self->activeThreads > 0) || self->thread_solutions.maxSolutionsReached()) {
+                pthread_cond_wait(&(self->queueCond), &(self->queueLock));
+            }*/
+/*
+            if (self->taskQueue.size() == 0) { //done executing
                 pthread_cond_broadcast(&(self->queueCond)); //wake the sleeping threads
                 pthread_mutex_unlock(&(self->queueLock));
                 break;
             }
+*/
             if (self->useBatching) {
                 numTasksToMove = std::min(self->taskQueue.size(), self->batchSize);
                 for (int i = 0; i < numTasksToMove; ++i) {
@@ -85,7 +133,26 @@ namespace slvr {
             self->taskQueue.splice(self->taskQueue.end(), newTasks);
             self->thread_solutions.addSolutions(newSolutions);
             self->activeThreads--; //thread is no longer going to add Tasks (until it picks up new ones) so it is no longer active!
-            pthread_cond_broadcast(&(self->queueCond)); //wake up the other threads to take what they can      
+            pthread_cond_broadcast(&(self->queueCond)); //wake up the other threads to take what they can  
+
+            /*bool timeToGo = self->thread_solutions.maxSolutionsReached();
+            pthread_mutex_unlock(&(self->queueLock));
+            if (timeToGo) {
+                break;
+            }*/
+/*
+            if we have enough solutions, we want each thread to leave.
+            there are these kinds of threads to deal with before we exit (they dont have the lock):
+                waiting for consumer lock
+                sleeping
+                waiting for post-wake-up lock 
+                waiting on producer lock 
+
+            idea: in consumer lock, dont bother getting a task, just wake up and leave. 
+                    //in producer lock, after placing tasks in, check numSolutions and then leave.
+                
+*/
+
             pthread_mutex_unlock(&(self->queueLock));
         }
         return NULL;

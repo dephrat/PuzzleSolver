@@ -1,6 +1,8 @@
 #ifndef SOLUTIONS_HPP
 #define SOLUTIONS_HPP
 
+#include <iostream> //latest thing maybe dont need, probably will remove
+
 #include <array>
 #include <utility>
 #include <vector>
@@ -37,8 +39,22 @@ class Solutions {
             ++numSolutions;
         }
         void addSolutions(std::vector<Solution>& solns) { 
-            solutions.insert(solutions.end(), solns.begin(), solns.end());
-            numSolutions += solns.size();
+            if (maxSolutions == -1) {
+                solutions.insert(solutions.end(), solns.begin(), solns.end());
+                numSolutions += solns.size();
+            } else {
+                size_t numToAdd = maxSolutions - numSolutions;
+                if (numToAdd < 0) {
+                    std::cerr << "what the fuck\n";
+                    return;
+                } else if (numToAdd >= solns.size()) {
+                    solutions.insert(solutions.end(), solns.begin(), solns.end());
+                    numSolutions += solns.size();
+                } else {
+                    solutions.insert(solutions.end(), solns.begin(), solns.begin() + numToAdd);
+                    numSolutions += numToAdd;
+                }
+            }
         }
 
         Board constructBoardFromSolution(const Solution& solution, const std::vector<std::string>& pieceList) const;
