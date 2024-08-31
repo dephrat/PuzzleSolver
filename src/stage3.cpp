@@ -34,7 +34,11 @@ void shellDisplayResults(const slvr::Solver& solver) {
             if (input == "help" || input == "h") {
                 std::cout << msgs::stage3CommandsMessage << std::endl;
             } else if (input == "validate" || input == "va") {
-                
+                if (numSolutions == solutionsVector.size() && thread_numSolutions == thread_solutionsVector.size()) {
+                    std::cout << "Looks good!" << std::endl;
+                } else {
+                    std::cerr << "Uh oh, looks like the solution sizing is off" << std::endl;
+                }
             } else if (input == "exit" || input == "e") {
                 std::cout << "Exiting stage 3." << std::endl;
                 return;
