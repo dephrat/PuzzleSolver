@@ -52,7 +52,8 @@ namespace slvr {
         //multi-threaded methods
         void thread_solve();
         static void* startup(void* args);
-        void execute(const Task& task, std::list<Task>& newTasks);
+        ///void execute(const Task& task, std::list<Task>& newTasks);
+        void execute(const Task& task, std::vector<Task>& newTasks);
         void execute(const Task& task, std::vector<Solution>& newSolutions);
 
         //multi-threaded parameters
@@ -61,7 +62,8 @@ namespace slvr {
         bool useBatching;
 
         //fields used by threads
-        std::list<Task> taskQueue;
+        ///std::list<Task> taskQueue;
+        std::vector<Task> taskQueue;
         pthread_mutex_t queueLock = PTHREAD_MUTEX_INITIALIZER;
         pthread_cond_t queueCond = PTHREAD_COND_INITIALIZER;
         int activeThreads = 0;
