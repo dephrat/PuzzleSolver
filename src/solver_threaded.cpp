@@ -111,9 +111,10 @@ namespace slvr {
             //Executor: execute task(s)
             std::vector<Solution> newSolutions;
             std::list<Task> newTasks;
+            size_t pieceListLastIdx = self->pieceList.size() - 1;
             if (self->useBatching) {
                 for (int i = 0; i < numTasksToMove; ++i) {
-                    if (tasksToProcess[i].current_state.size() == self->pieceList.size() - 1)
+                    if (tasksToProcess[i].current_state.size() == pieceListLastIdx)
                         //If we're placing the final piece, we're finding solutions
                         self->execute(tasksToProcess[i], newSolutions);
                     else
@@ -121,7 +122,7 @@ namespace slvr {
                         self->execute(tasksToProcess[i], newTasks);
                 }
             } else {
-                if (task.current_state.size() == self->pieceList.size() - 1)
+                if (task.current_state.size() == pieceListLastIdx)
                     //If we're placing the final piece, we're finding solutions
                     self->execute(task, newSolutions);
                 else
