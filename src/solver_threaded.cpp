@@ -54,7 +54,7 @@ namespace slvr {
             std::vector<Task> tasksToProcess;
             Task task;
 
-            //Consumer: get task
+            //Enter first critical section
             pthread_mutex_lock(&(self->queueLock));
 
             /* Logic for waiting/exiting/continuing:
@@ -74,7 +74,7 @@ namespace slvr {
             
             //We need tasks, there are none, but there are active threads.
             //Therefore, wait for the active threads to deposit their tasks and/or solutions.
-            while (self->thread_solutions.maxSolutionsReached() == false && self->taskQueue.size() == 0 && self->activeThreads > 0) {
+            while (self->thread_solutions.maxSolutionsReached() == false && self->taskQueue.empty() && self->activeThreads > 0) {
                pthread_cond_wait(&(self->queueCond), &(self->queueLock));
             }
 
@@ -84,7 +84,7 @@ namespace slvr {
                 pthread_cond_broadcast(&(self->queueCond));
                 pthread_mutex_unlock(&(self->queueLock));
                 break;
-            } else if (self->taskQueue.size() > 0) {//we need solutions, and we have tasks! Go get em soldier!
+            } else if (self->taskQueue.empty() == false) {//we need solutions, and we have tasks! Go get em soldier!
                 //do nothing
             } else if (self->activeThreads == 0) { //no active threads means no more tasks. We need solutions, but we're not getting em.
                 pthread_cond_broadcast(&(self->queueCond));
@@ -92,7 +92,7 @@ namespace slvr {
                 break;
             }
 
-            //Take tasks from the queue
+            //Consumer: take tasks from the queue
             if (self->useBatching) {
                 numTasksToMove = std::min(self->taskQueue.size(), self->batchSize);
                 for (int i = 0; i < numTasksToMove; ++i) {
@@ -104,6 +104,8 @@ namespace slvr {
                 self->taskQueue.pop_front();
             }
             self->activeThreads++; //this thread took a Task or batch of Tasks, so it's active!
+            
+            //Exit first critical section
             pthread_mutex_unlock(&(self->queueLock));
 
             //Executor: execute task(s)
@@ -111,12 +113,11 @@ namespace slvr {
             std::list<Task> newTasks;
             if (self->useBatching) {
                 for (int i = 0; i < numTasksToMove; ++i) {
-                    
                     if (tasksToProcess[i].current_state.size() == self->pieceList.size() - 1)
                         //If we're placing the final piece, we're finding solutions
                         self->execute(tasksToProcess[i], newSolutions);
                     else
-                        //Otherwise, we're finding intermediate Tasks
+                        //Otherwise, we're finding intermediate Tasks (from which we may find solutions later)
                         self->execute(tasksToProcess[i], newTasks);
                 }
             } else {
@@ -128,16 +129,18 @@ namespace slvr {
                     self->execute(task, newTasks);
             }
 
-            //Producer: add tasks and solution
+            //Enter second critical section
             pthread_mutex_lock(&(self->queueLock));
 
-            //Add newly discovered tasks and solutions
+            ////Producer: add newly discovered tasks and solutions
             self->taskQueue.splice(self->taskQueue.begin(), newTasks); //add to front to catch early solutions
             self->thread_solutions.addSolutions(newSolutions);
             self->activeThreads--; //thread is no longer going to add Tasks (until it picks up new ones) so it is no longer active!
             
             //Prepare to go back to being a consumer
-            pthread_cond_broadcast(&(self->queueCond)); //wake up the other threads to take what they can  
+            pthread_cond_broadcast(&(self->queueCond)); //wake up the other threads to take what they can 
+
+            //Exit second critical section 
             pthread_mutex_unlock(&(self->queueLock));
         }
         return NULL;
