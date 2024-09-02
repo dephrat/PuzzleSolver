@@ -56,9 +56,9 @@ namespace slvr {
         void execute(const Task& task, std::vector<Solution>& newSolutions);
 
         //multi-threaded parameters
-        int numThreads;
-        size_t batchSize;
-        bool useBatching;
+        const int numThreads;
+        const size_t batchSize;
+        const bool useBatching;
 
         //fields used by threads
         std::list<Task> taskQueue;

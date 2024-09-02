@@ -132,7 +132,7 @@ namespace slvr {
             //Enter second critical section
             pthread_mutex_lock(&(self->queueLock));
 
-            ////Producer: add newly discovered tasks and solutions
+            //Producer: add newly discovered tasks and solutions
             self->taskQueue.splice(self->taskQueue.begin(), newTasks); //add to front to catch early solutions
             self->thread_solutions.addSolutions(newSolutions);
             self->activeThreads--; //thread is no longer going to add Tasks (until it picks up new ones) so it is no longer active!
