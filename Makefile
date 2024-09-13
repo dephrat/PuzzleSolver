@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++2a -Wall -g -MMD -pthread -O3
+CXXFLAGS = -std=c++17 -Wall -g -MMD -pthread -O3
 CXXCMD = g++ $(CXXFLAGS)
 
 STAGE_NUMS = 0 1 2 3
