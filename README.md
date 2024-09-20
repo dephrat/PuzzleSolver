@@ -3,7 +3,7 @@
 ### Overview
 This is a puzzle solver!  
 The project was created to find solutions to a puzzle: Place 9 pieces into a 10x10 grid. I came up with single- and multi-threaded approaches, and you can use both to see which one runs faster.
-The single-threaded approach used recursive backtracking, while the multi-threaded approach split the challenge into various Tasks and distributed them to a thread pool.
+The single-threaded approach uses recursive backtracking, while the multi-threaded approach splits the challenge into various Tasks and distributes them to a thread pool.
 
 ### Build & Run:
 - `cd` into the repo.
