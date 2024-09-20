@@ -2,6 +2,7 @@
 #include "../include/stage2.hpp"
 
 void shellPrepSolver(int& numThreads, int& batchSize, int& maxSolutions) {
+    std::cout << msgs::stage2IntroMessage << std::endl;
     int nT;
     while (true) {
         std::cout << "How many threads? (0 for single-threaded): ";

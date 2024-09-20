@@ -16,6 +16,7 @@ namespace msgs {
     const std::string pieceMissingZeroZeroErrorMessage = "ERROR: Sorry, looks like one of the pieces was missing the {0,0} coordinate.";
     const std::string repeatedPieceSymbolErrorMessage = "ERROR: Sorry, some of the piece symbols were used for multiple pieces. Please ensure each piece uses a unique symbol.";
     const std::string stage1IntroMessage = "Stage 1: Use commands to put together a list of pieces. The solver will attempt to place these pieces into the grid. Enter 'help' for a list of accepted commands.";
+    const std::string stage2IntroMessage = "Stage 2: Answer the prompts to prepare the puzzle solver.";
     const std::string stage3IntroMessage = "Stage 3: Use commands to view the results. Enter 'help' for a list of accepted commands.";
     
     const std::string stage1CommandsMessage = std::string("\nhelp: lists all commands.\n") //update to include aliases, figure out how to stylize LOW PRIORITY

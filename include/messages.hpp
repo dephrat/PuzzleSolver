@@ -20,6 +20,7 @@ namespace msgs {
     extern const std::string repeatedPieceSymbolErrorMessage;
     extern const std::string stage1CommandsMessage;
     extern const std::string stage1IntroMessage;
+    extern const std::string stage2IntroMessage;
     extern const std::string stage3CommandsMessage;
     extern const std::string stage3IntroMessage;
     
