@@ -20,4 +20,4 @@ The single-threaded approach uses recursive backtracking, while the multi-thread
 ### Notes:
 - The performance improvement seen by multithreading scales near-linearly with the number of CPU cores you have access to. The more cores, the better!
 - I found 100 threads and a batch size of 1000 to be pretty consistently fast.
-- use `createoriginal` in stage 1 to run the solver on the original puzzle.
+- Use `createoriginal` in stage 1 to run the solver on the original puzzle. (You'll understand when you run the program)
